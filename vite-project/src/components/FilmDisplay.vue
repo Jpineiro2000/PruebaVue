@@ -17,6 +17,11 @@ export default defineComponent({
             this.films = data;
           })
     },
+
+  },
+  mounted(){
+    this.getFilms();
+
   }
 })
 </script>
