@@ -3,7 +3,6 @@ import {defineComponent} from 'vue'
 
 export default defineComponent({
   name: "FilmDisplay",
-  props
   data() {
     return {
       films:[]
