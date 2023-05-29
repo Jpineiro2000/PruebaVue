@@ -1,7 +1,7 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import FilmDisplay from "./components/FilmDisplay.vue";
-import Prueba from "./components/Prueba.vue";
+import Prueba2 from "./components/Prueba2.vue";
 </script>
 
 <template>
@@ -15,7 +15,7 @@ import Prueba from "./components/Prueba.vue";
   </div>
   <HelloWorld msg="Vite + Vue" />
   <FilmDisplay></FilmDisplay>
-  <Prueba></Prueba>
+  <Prueba2></Prueba2>
 </template>
 
 <style scoped>

@@ -1,11 +1,16 @@
 <script>
 import {defineComponent} from 'vue'
+import Prueba from "./Prueba.vue";
+
 
 export default defineComponent({
   name: "FilmDisplay",
+  components: {Prueba},
   data() {
     return {
-      films:[]
+      //columns:['Title','Image','Description',''],
+      films:[],
+      baseUrl : "https://image.tmdb.org/t/p/w300"
     }
   },
   methods:{
@@ -19,36 +24,62 @@ export default defineComponent({
     },
 
   },
+  template:`
+    <h2>Round Card</h2>
+
+    <div v-if="films.results">
+    <div v-for="film in films.results">
+      <Prueba  :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"></Prueba>
+    </div>
+    </div>
+    <button type="button"></button>
+
+  `,
   mounted(){
     this.getFilms();
 
   }
 })
 </script>
-
+<!--
 <template>
-  <table>
-    <thead>
-    <tr>
-      <th v-for="key in columns">{{key}}</th>
-    </tr>
-    </thead>
-    <tbody v-if="films.results">
-    <!--Componente que pinte el contenido de la tabla-->
-    <tr v-for="film in films.results">
-      <td>{{film.title}}</td>
-      <td><img v-bind:src="'https://image.tmdb.org/t/p/w200' + film.poster_path" class="img-fluid ancho" v-bind:alt="film.title"></td>
-      <td>    <!-- La elispsis sólo funciona con los tags div y p-->
-        <p class="acorto"> {{film.overview}} </p>
-      </td>
-      <td>
-        <button id="more">See more</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</template>
+  <h2>Round Card</h2>
+
+  <div v-if="films.results">
+    <div v-for="film in films.results">
+      <Prueba  :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"></Prueba>
+    </div>
+  </div>
+  <button type="button"></button>
+</template>-->
 
 <style scoped>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  margin: auto;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+img {
+  border-radius: 5px 5px 0 0;
+}
+
+.container {
+  padding: 2px 16px;
+  position: relative;
+}
+.acorto{
+  white-space: nowrap;
+  height: 20px;
+  width: 290px;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
 
 </style>
