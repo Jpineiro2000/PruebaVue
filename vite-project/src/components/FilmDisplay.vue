@@ -1,85 +1,101 @@
 <script>
 import {defineComponent} from 'vue'
-import Prueba from "./Prueba.vue";
+import FilmCard from "./FilmCard.vue";
+import Header from "./Header.vue";
+import Footer from "./Footer.vue";
 
+const api = async function () {
+  let response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17`);
+  return await response.json();
+}
 
 export default defineComponent({
   name: "FilmDisplay",
-  components: {Prueba},
+  components: {Footer, Header, FilmCard},
   data() {
     return {
       //columns:['Title','Image','Description',''],
+      loading : true,
+      total_pages : 0,
+      actual_page: 0,
       films:[],
       baseUrl : "https://image.tmdb.org/t/p/w300"
     }
   },
   methods:{
-    getFilms()
+    
+    getApi()
     {
+      this.loading = true;
       fetch(`https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17`)
           .then(response => response.json())
           .then(data => {
-            this.films = data;
-          })
+            this.films = data.results;
+            this.actual_page = data.page;
+            this.total_pages = data.total_pages;
+            this.loading = false;
+          }).catch(err=>{
+          console.error("errr")
+      })
     },
+    async useApi() {
+      const data = await api();
+      this.films = data.results;
+      this.actual_page = data.page;
+      this.total_pages = data.total_pages;
+      this.loading = false;
+      console.log(this.films);
+      console.log(this.actual_page);
+      console.log(this.total_pages);
+      console.log(this.loading);
+
+    }
 
   },
-  template:`
-    <h2>Round Card</h2>
-
-    <div v-if="films.results">
-    <div v-for="film in films.results">
-      <Prueba  :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"></Prueba>
-    </div>
-    </div>
-    <button type="button"></button>
-
-  `,
-  mounted(){
-    this.getFilms();
+   mounted(){
+     this.useApi();
 
   }
 })
 </script>
-<!--
-<template>
-  <h2>Round Card</h2>
 
-  <div v-if="films.results">
-    <div v-for="film in films.results">
-      <Prueba  :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"></Prueba>
+<template>
+  <Header></Header>
+  <h2>Page : {{actual_page}}</h2>
+
+  <div v-for="film in films">
+      <FilmCard  :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"  :total_pages="this.total_pages" :actual_page="this.actual_page"></FilmCard>
     </div>
+  <div class="d-flex align-items-center" v-if="loading">
+    <strong>Loading...</strong>
+    <div class="loader"></div>
   </div>
-  <button type="button"></button>
-</template>-->
+  
+</template>
 
 <style scoped>
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  border-radius: 5px;
-  margin: auto;
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
 }
 
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 img {
   border-radius: 5px 5px 0 0;
 }
-
-.container {
-  padding: 2px 16px;
-  position: relative;
-}
-.acorto{
-  white-space: nowrap;
-  height: 20px;
-  width: 290px;
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-}
-
 </style>
