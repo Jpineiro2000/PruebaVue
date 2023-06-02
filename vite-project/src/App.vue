@@ -16,6 +16,7 @@ import FilmDisplay from "./components/FilmDisplay.vue";
   <HelloWorld msg="Vite + Vue" />-->
   <FilmDisplay></FilmDisplay>
 
+
 </template>
 
 <style scoped>

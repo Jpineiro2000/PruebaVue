@@ -1,5 +1,7 @@
 <script>
 import {defineComponent} from 'vue'
+//Hacer paginación primero, utilizando los eventos del hijo al padre.
+//Arreglar el css , lo que tenga que ver con el conjunto de cards va en el padre. Usar Flex o grid
 export default defineComponent({
   data(){
     return{
@@ -32,7 +34,6 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="col">
     <div class="card">
       <img class="card-img-top" v-bind:src="img" v-bind:alt="title">
       <div class="card-body">
@@ -42,7 +43,6 @@ export default defineComponent({
         <div class="sticky" v-bind:style="{ visibility: computedHide }">{{ description }}</div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>

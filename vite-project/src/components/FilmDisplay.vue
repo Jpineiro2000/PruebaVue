@@ -1,11 +1,12 @@
 <script>
+
 import {defineComponent} from 'vue'
 import FilmCard from "./FilmCard.vue";
 import Header from "./Header.vue";
 import Footer from "./Footer.vue";
 
 const api = async function () {
-  let response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17`);
+  let response = await fetch(`https://api.thhibpihemoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17&page=4`);
   return await response.json();
 }
 
@@ -15,7 +16,7 @@ export default defineComponent({
   data() {
     return {
       //columns:['Title','Image','Description',''],
-      loading : true,
+      //loading : true,
       total_pages : 0,
       actual_page: 0,
       films:[],
@@ -24,7 +25,7 @@ export default defineComponent({
   },
   methods:{
     
-    getApi()
+    /*getApi()
     {
       this.loading = true;
       fetch(`https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17`)
@@ -37,19 +38,25 @@ export default defineComponent({
           }).catch(err=>{
           console.error("errr")
       })
-    },
+    },*/
     async useApi() {
-      const data = await api();
-      this.films = data.results;
-      this.actual_page = data.page;
-      this.total_pages = data.total_pages;
-      this.loading = false;
-      console.log(this.films);
-      console.log(this.actual_page);
-      console.log(this.total_pages);
-      console.log(this.loading);
-
-    }
+      try {
+        const data = await api();
+        console.log(data);
+        this.films = data.results;
+        this.actual_page = data.page;
+        this.total_pages = data.total_pages;
+        this.loading = false;
+        if(!data)
+          throw ('There is a problem in catching the data from the api');
+      }catch (e){
+          //Div message error
+        const div = document.createElement("div");
+        div.innerHTML="<h2>" + e.name + "</h2>" +
+            "<p>" + e.description + "</p>";
+        document.body.appendChild(div);
+      }
+     }
 
   },
    mounted(){
@@ -62,15 +69,22 @@ export default defineComponent({
 <template>
   <Header></Header>
   <h2>Page : {{actual_page}}</h2>
-
-  <div v-for="film in films">
-      <FilmCard  :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"  :total_pages="this.total_pages" :actual_page="this.actual_page"></FilmCard>
-    </div>
+  <div>
+        <FilmCard  v-for="film in films"
+            :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"  :total_pages="this.total_pages" :actual_page="this.actual_page"></FilmCard>
+  </div>
   <div class="d-flex align-items-center" v-if="loading">
     <strong>Loading...</strong>
-    <div class="loader"></div>
+  <div class="loader"></div>
   </div>
-  
+  <!--<div class="botones">
+  <button class="button">Button</button>
+  <button class="button">Button</button>
+  <button class="button">Button</button>
+  <button class="button">Button</button>
+  </div>-->
+  <button @click="greet">Greet</button>
+  <Footer></Footer>
 </template>
 
 <style scoped>
@@ -83,7 +97,13 @@ export default defineComponent({
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
+.botones{
+  
+}
+.myError{
+  background-color: #f08181;
 
+}
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
