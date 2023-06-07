@@ -67,7 +67,6 @@ h5{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   width: 25%;
-  float: left;
   border-radius: 5px;
   margin: 15px;
   height: 650px;
