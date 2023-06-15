@@ -1,51 +1,110 @@
 <script>
 import {defineComponent} from 'vue'
-
+import * as querystring from "querystring";
+//Url search example : https://api.themoviedb.org/3/search/movie?api_key=66ae687f31e3066ab23a1b7128278d17&query=Mario
 export default defineComponent({
-  name: "Header"
+  name: "Header",
+	data() {
+		return {
+			query: ''
+		}
+	},
+	methods: {
+		 onsubmit() {
+			this.$emit('onsubmit', this.query);
+		}
+	}
 })
 </script>
 
 <template>
-  <ul>
-    <li><a class="active" href="#home">Home</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#about">About</a></li>
-  </ul>
+	<div class="topnav">
+		<a class="active" href="#home">Home</a>
+		<a href="#about">About</a>
+		<a href="#contact">Contact</a>
+		<div class="search-container">
+			<form>
+				<input v-model="query" type="text" placeholder="Search.." name="search">
+				<button @click="onsubmit"><i class="fa fa-search"></i></button>
+			</form>
+		</div>
+	</div>
 </template>
 
 <style scoped>
-ul {
-  width: 100%;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid #e7e7e7;
-  background-color: #f3f3f3;
+* {box-sizing: border-box;}
+
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
-li {
-
-  float: left;
+.topnav {
+	overflow: hidden;
+	background-color: #e9e9e9;
 }
 
-li a {
-
-  display: block;
-  color: #666;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+.topnav a {
+	float: left;
+	display: block;
+	color: black;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
 }
 
-li a:hover:not(.active) {
-  background-color: #ddd;
+.topnav a:hover {
+	background-color: #ddd;
+	color: black;
 }
 
-li a.active {
-  color: white;
-  background-color: #1995ee;
+.topnav a.active {
+	background-color: #2196F3;
+	color: white;
 }
+
+.topnav .search-container {
+	float: right;
+}
+
+.topnav input[type=text] {
+	padding: 6px;
+	margin-top: 8px;
+	font-size: 17px;
+	border: none;
+}
+
+.topnav .search-container button {
+	float: right;
+	padding: 6px 10px;
+	margin-top: 8px;
+	margin-right: 16px;
+	background: #ddd;
+	font-size: 17px;
+	border: none;
+	cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+	background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+	.topnav .search-container {
+		float: none;
+	}
+	.topnav a, .topnav input[type=text], .topnav .search-container button {
+		float: none;
+		display: block;
+		text-align: left;
+		width: 100%;
+		margin: 0;
+		padding: 14px;
+	}
+	.topnav input[type=text] {
+		border: 1px solid #ccc;
+	}
+}
+
 </style>

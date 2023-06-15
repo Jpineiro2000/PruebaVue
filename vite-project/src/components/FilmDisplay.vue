@@ -4,70 +4,77 @@ import {defineComponent} from 'vue'
 import FilmCard from "./FilmCard.vue";
 import Header from "./Header.vue";
 import Footer from "./Footer.vue";
-
-const api = async function () {
-  //https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17
-  let response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17`);
-  return await response.json();
-}
+import ButtonPagination from "./ButtonPagination.vue";
 
 export default defineComponent({
   name: "FilmDisplay",
-  components: {Footer, Header, FilmCard},
+  components: {ButtonPagination, Footer, Header, FilmCard},
   data() {
     return {
+			mainUrl:"https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17",
       //columns:['Title','Image','Description',''],
       //loading : true,
-      total_pages : 500,
-			//La imagen está a 500 a pesar de que tiene muchas más debido a que la url de la API no permite acceder a más.
+      total_pages : 0,
+			//Las páginas están a 500 a pesar de que tiene muchas más debido a que la url de la API no permite acceder a más.
       actual_page: 1,
       films:[],
-      baseUrl : "https://image.tmdb.org/t/p/w300"
+      baseUrl : "https://image.tmdb.org/t/p/w300",
 			//Al poner las imágenes en 300 en vez de 400 , hay algunas que no admiten este formato y la img se queda en null
 			//Las dimensiones disponibles de los píxeles son de 300 a 500 píxeles
     }
   },
   methods:{
-
-    /*getApi()
-    {
-      this.loading = true;
-      fetch(`https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17`)
-          .then(response => response.json())
-          .then(data => {
-            this.films = data.results;
-            this.actual_page = data.page;
-            this.total_pages = data.total_pages;results
-            this.loading = false;
-          }).catch(err=>{
-          console.error("errr")
-      })
-    },*/
-		async pagination(num){
-			switch (num) {
-				case 0:
-					this.actual_page++;
-					break;
-				case 1:
-					this.actual_page--;
-					break;
-				case 2:
-					this.actual_page = this.total_pages;
-					break;
-				case 3:
-					this.actual_page = 1;
-					break;
-			}
-			console.log(this.actual_page);
-			this.useApi(this.actual_page);
+		async search(){
+			//alert(query);
+				//this.mainUrl=`https://api.themoviedb.org/3/search/movie?api_key=66ae687f31e3066ab23a1b7128278d17&query=${query}`;
+			//	alert("Search : "+this.mainUrl);
+			 await this.useApi(this.mainUrl);
+			 
+				/*if(this.films.length===0){
+					const  app = document.getElementById(("app"))
+					const collection = document.getElementsByClassName("btn-group");
+				/*if(this.films.length===0){
+					const  app = document.getElementById(("app"))
+					const collection = document.getElementsByClassName("btn-group");
+					app.removeChild(document.get
+				/*if(this.films.length===0){
+					const  app = document.getElementById(("app"))
+					const collection = document.getElementsByClassName("btn-group");
+					app.removeChild(document.get
+					app.removeChild(document.getElementById('actual_page'));
+					for (let i = 0; i < collection.length; i++) {
+						app.removeChild(collection[i]);
+					}
+					const div = document.createElement("div");
+					div.setAttribute('style','width:100%;background-color:#A5E3F1FF;text-align:center;');
+					let ertitle = document.createElement('h5');
+					let textTitle = document.createTextNode('No hay resultados');
+					ertitle.appendChild(textTitle);
+					div.appendChild(ertitle);
+					console.log(e.message);
+					const cuerpoDiv = document.getElementsByClassName('container')[0];
+					cuerpoDiv.appendChild(div);
+				}*/
 		},
-		async useApi( options) {
-			const  page = options.page
-			console.log("Page : ",page)
-			console.log("actual page : ",this.actual_page)
+		
+		async paginationFather(num){
+			await this.useApi(num);
+		},
+		
+		async useApi(query) {
+			let url = `https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17`;
+			if(query==="search"){
+				url.replace("discover","search");
+				url+= `&query=${query}`;
+				alert("Search : "+query);
+			}else if(Number.isInteger(query)){
+				url+= `&page=${query}`;
+				alert("Change of page");
+			}
+			console.log("actual url : ",url)
 			
 			try {
-        let response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17&page=${this.actual_page}`);
+        let response = await fetch(url);
         if(!response.ok) {
 					throw new Error(`HTTP error ${response.status}`);
 				}
@@ -76,26 +83,41 @@ export default defineComponent({
         console.log(data);
         this.films = data.results;
         this.actual_page = data.page;
+				this.total_pages = data.total_pages;
         this.loading = false;
-      }catch (e){
+			}catch (e){
           //Div message error
+				const  app = document.getElementById(("app"))
+				const collection = document.getElementsByClassName("btn-group");
+				app.removeChild(document.getElementById('actual_page'));
+				for (let i = 0; i < collection.length; i++) {
+					app.removeChild(collection[i]);
+				}
         const div = document.createElement("div");
-        div.innerHTML="<h2>" + e.name + "</h2>" +
-            "<p>" + e.description + "</p>";
-        console.log(e.message, e.messageerror);
-        document.body.appendChild(div);
-      }
+				div.setAttribute('style','width:100%;background-color:#ffb0b0;text-align:center;');
+				let ertitle = document.createElement('h2');
+				let erp = document.createElement('p');
+				let textp = document.createTextNode('Por favor, recargue la página');
+				let texttitle = document.createTextNode('Error');
+				erp.appendChild(textp);
+				ertitle.appendChild(texttitle);
+				div.appendChild(ertitle);
+				div.appendChild(erpin);
+				console.log(e.message);
+        const cuerpoDiv = document.getElementsByClassName('container')[0];
+				cuerpoDiv.appendChild(div);
+			}
      }
   },
    mounted(){
-     this.useApi(`https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17`);
+     this.useApi("discover");
   }
 })
 </script>
-:
+
 <template>
-  <Header></Header>
-  <h2>Page : {{actual_page}}</h2>
+  <Header @onsubmit="this.useApi('search')"></Header>
+  <h2 id="actual_page">Page : {{actual_page}}</h2>
   <div class="container">
         <FilmCard  v-for="film in films"
             :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"  :total_pages="this.total_pages" :actual_page="this.actual_page"></FilmCard>
@@ -104,13 +126,8 @@ export default defineComponent({
     <strong>Loading...</strong>
   <div class="loader"></div>
   </div>
-	
-	<div class="btn-group">
-		<button :disabled="this.actual_page < 3" @click="pagination(3)">&lt;&lt;</button>
-		<button :disabled="this.actual_page === 1" @click="pagination(1)">&lt;</button>
-		<button :disabled="this.actual_page === this.total_pages" @click="pagination(0)">></button>
-		<button :disabled="this.actual_page >= (this.total_pages - 1)" @click="pagination(2)">>></button>
-	</div>
+	<button-pagination @pagination="paginationFather" :total_pages="this.total_pages" :actual_page="this.actual_page"></button-pagination>
+
   <Footer></Footer>
 </template>
 
@@ -137,10 +154,6 @@ export default defineComponent({
   animation: spin 2s linear infinite;
 }
 
-.myError{
-  background-color: #f08181;
-
-}
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
@@ -175,14 +188,11 @@ button:disabled{
 	background-color: lightgray;
 	border: 1px solid black;
 }
-/* Clear floats (clearfix hack) */
-
 
 .btn-group button:not(:last-child) {
 	border-right: none; /* Prevent double borders */
 }
 
-/* Add a background color on hover */
 .btn-group button:hover:enabled {
 	background-color: #3e8e41;
 }
