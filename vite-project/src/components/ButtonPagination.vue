@@ -3,27 +3,36 @@ import {defineComponent} from 'vue'
 
 export default defineComponent({
 	name: "ButtonPagination",
+	data() {
+		return {
+			current_page: 1,
+		}
+	},
 	props:{
 		actual_page:Number,
 		total_pages:Number,
 	},
 	methods:{
 		 pagination(num){
+			 console.log("Estamos dentro de pagination : "+this.current_page);
+			 this.current_page = this.actual_page;
 			switch (num) {
 				case 0:
-					this.actual_page+=1;
+					this.current_page++;
 					break;
 				case 1:
-					this.actual_page--;
+					this.current_page--;
 					break;
 				case 2:
-					this.actual_page = this.total_pages;
+					this.current_page = this.total_pages;
 					break;
 				case 3:
-					this.actual_page = 1;
+					this.current_page = 1;
 					break;
 			}
-			 this.$emit('pagination',this.actual_page);
+			 console.log("Estamos dentro de pagination antes de emit : "+this.current_page);
+			 
+			 this.$emit('pagination',this.current_page);
 		},
 	}
 })
@@ -31,10 +40,10 @@ export default defineComponent({
 
 <template>
 	<div class="btn-group">
-		<button :disabled="this.actual_page < 3" @click="pagination(3)">&lt;&lt;</button>
-		<button :disabled="this.actual_page === 1" @click="pagination(1)">&lt;</button>
-		<button :disabled="this.actual_page === this.total_pages" @click="pagination(0)">></button>
-		<button :disabled="this.actual_page >= (this.total_pages - 1)" @click="pagination(2)">>></button>
+		<button :disabled="this.current_page < 3" @click="pagination(3)">&lt;&lt;</button>
+		<button :disabled="this.current_page === 1" @click="pagination(1)">&lt;</button>
+		<button :disabled="this.current_page === this.total_pages" @click="pagination(0)">></button>
+		<button :disabled="this.current_page >= (this.total_pages - 1)" @click="pagination(2)">>></button>
 	</div>
 	
 </template>

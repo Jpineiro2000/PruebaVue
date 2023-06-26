@@ -1,7 +1,6 @@
 <script>
 import {defineComponent} from 'vue'
-import * as querystring from "querystring";
-//Url search example : https://api.themoviedb.org/3/search/movie?api_key=66ae687f31e3066ab23a1b7128278d17&query=Mario
+//this.mainURL search example : https://api.themoviedb.org/3/search/movie?api_key=66ae687f31e3066ab23a1b7128278d17&query=Mario
 export default defineComponent({
   name: "Header",
 	data() {
@@ -11,7 +10,8 @@ export default defineComponent({
 	},
 	methods: {
 		 onsubmit() {
-			this.$emit('onsubmit', this.query);
+			 alert("HOLA " +this.query);
+			this.$emit('search', this.query);
 		}
 	}
 })
@@ -19,13 +19,13 @@ export default defineComponent({
 
 <template>
 	<div class="topnav">
-		<a class="active" href="#home">Home</a>
+		<a class="active" href="../../index.html">Home</a>
 		<a href="#about">About</a>
 		<a href="#contact">Contact</a>
 		<div class="search-container">
-			<form>
+			<form @submit.prevent="onsubmit">
 				<input v-model="query" type="text" placeholder="Search.." name="search">
-				<button @click="onsubmit"><i class="fa fa-search"></i></button>
+				<button><i class="fa fa-search"></i></button>
 			</form>
 		</div>
 	</div>
