@@ -41,7 +41,6 @@ export default defineComponent({
 		
 		this.loading = true;
 		this.films=[];
-		debugger;
 		const url = getUrlTheMovieDB(query, page);
 		console.log("actual url : ",url);
 		try {

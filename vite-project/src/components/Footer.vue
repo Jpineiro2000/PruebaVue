@@ -17,7 +17,8 @@ export default defineComponent({
 
 <style scoped>
   .content-footer{
-	 width: 300px;
+	 text-align: center;
+	 width: 100%;
 	 height: 100px;
 	 display: flex;
 	 flex-direction: column;

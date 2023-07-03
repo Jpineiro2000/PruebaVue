@@ -17,7 +17,7 @@ export default defineComponent({
 </script>
 
 <template>
-	<div class="topnav">
+	<nav class="topnav">
 		<a class="active" href="../../index.html">Home</a>
 		<a href="#about">About</a>
 		<a href="#contact">Contact</a>
@@ -27,7 +27,7 @@ export default defineComponent({
 				<button><i class="fa fa-search"></i></button>
 			</form>
 		</div>
-	</div>
+	</nav>
 </template>
 
 <style scoped>

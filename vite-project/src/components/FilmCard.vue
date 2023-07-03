@@ -31,13 +31,17 @@ export default defineComponent({
 
 <template>
     <div class="card">
-      <img class="card-img-top" v-bind:src="img" v-bind:alt="title">
-      <div class="card-body">
+		<picture>
+		  <source media="(min-width:500px)" v-bind:srcset="img">
+		  <source media="(min-width:400px)" v-bind:srcset="img">
+		  <img class="card-img-top" v-bind:src="img" v-bind:alt="title" style="width:auto;">
+		</picture>
+      <article class="card-body">
         <p class="card-title"><b>{{title}}</b></p>
-        <p class="card-text">{{ description }}</p>
+        <pre class="card-text">{{ description }}</pre>
         <button @click="showMore">See more</button>
         <div class="descriptions" v-show="computedHide">{{ description }}</div>
-      </div>
+      </article>
     </div>
 </template>
 
@@ -52,12 +56,12 @@ div.descriptions {
   top: 0;
   background-color: rgba(210, 201, 93, 0.84);
   padding: 50px;
-  position: absolute;
+  position: relative;
   font-size: 20px;
-  z-index: 3;
+  z-index: 1;
   overflow: auto;
   width: 200px;
-  height: 80px;
+  height: 60px;
 }
 .card-text{
   white-space: nowrap;
