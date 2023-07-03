@@ -95,7 +95,7 @@ export default defineComponent({
 <template>
   <div class="main">
 	<div v-show="!error" id="title">
-	  <h2 id="actual_page">Page : {{actual_page}}</h2>
+	  <h1 id="actual_page">Page : {{actual_page}}</h1>
 	</div>
   <button-pagination class="btn-group" v-show="!error" :actual_page="this.actual_page" :total_pages="this.total_pages" @pagination="paginationFather"></button-pagination>
   <img v-show="loading" id="spinner" alt="spinning" height="200" src="../Images/Spinner.gif" width="200">
@@ -149,7 +149,7 @@ img {
   border-radius: 5px 5px 0 0;
 }
 .btn-group {
-  background-color: plum;
+  //background-color: plum;
 	padding: 5px;
 	margin-bottom: 10px;
 	display : flex;

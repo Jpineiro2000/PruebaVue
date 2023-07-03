@@ -40,14 +40,14 @@ import FilmDisplay from "./components/FilmDisplay.vue";
 	 
 }
 .header{
-  background-color: #747bff;
+  //background-color: #747bff;
   order: 1;
   height: 50px;
   width: 100%;
 }
 
 .main{
-  background-color: rgba(153, 133, 162, 0.84)                                                                                                                                                                                                                                                    ;
+  //background-color: rgba(153, 133, 162, 0.84)                                                                                                                                                                                                                                                    ;
   order : 2;
   flex-wrap: wrap ;
   display: flex;
@@ -57,7 +57,7 @@ import FilmDisplay from "./components/FilmDisplay.vue";
 
 .footer{
   order:3;
-  background-color: red;
+  background-color: #eea8a8;
   height: 100px;
   width: 100%;
 }

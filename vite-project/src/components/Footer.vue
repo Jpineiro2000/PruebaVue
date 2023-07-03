@@ -16,18 +16,18 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.content-footer{
-  width: 300px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-}
-
-footer {
-  padding: 3px;
-  background-color: #c78a72;
-  color: white;
-  display: flex;
-  justify-content: center;
-}
+  .content-footer{
+	 width: 300px;
+	 height: 100px;
+	 display: flex;
+	 flex-direction: column;
+  }
+  
+  footer {
+	 //padding: 3px;
+	 //background-color: #c78a72;
+	 color: white;
+	 display: flex;
+	 justify-content: center;
+  }
 </style>
