@@ -10,7 +10,6 @@ export default defineComponent({
 	},
 	methods: {
 		 onsubmit() {
-			 alert("HOLA " +this.query);
 			this.$emit('search', this.query);
 		}
 	}

@@ -40,6 +40,8 @@ export default defineComponent({
 	 async getUrl(query, page){
 		
 		this.loading = true;
+		this.films=[];
+		debugger;
 		const url = getUrlTheMovieDB(query, page);
 		console.log("actual url : ",url);
 		try {
@@ -54,16 +56,16 @@ export default defineComponent({
 		  this.actual_page = data.page;
 		  this.total_pages = data.total_pages;
 		  this.loading = false;
+		  if(this.films.length === 0 && !this.error){
+			 this.myPersonalError('Without coincidences', 'There is not available data');
+		  }
 		}catch (e){
 			this.myPersonalError('Error', 'Please, recharge the page');
-		}
-		if(this.films.length === 0){
-		  this.myPersonalError('Without coincidences', 'There is not available data');
 		}
 	 },
 	 
 	 myPersonalError(titleError, message){
-		this.error=true;
+		this.error = true;
 		const div = document.createElement("div");
 		div.setAttribute('class','error');
 		div.setAttribute('style','width:100%;background-color:#ffb0b0;text-align:center;');
@@ -91,28 +93,37 @@ export default defineComponent({
 </script>
 
 <template>
-	<Header @search="search"></Header>
-	<div id="title" v-show="!error">
+  <div class="main">
+	<div v-show="!error" id="title">
 	  <h2 id="actual_page">Page : {{actual_page}}</h2>
 	</div>
+  <button-pagination class="btn-group" v-show="!error" :actual_page="this.actual_page" :total_pages="this.total_pages" @pagination="paginationFather"></button-pagination>
+  <img v-show="loading" id="spinner" alt="spinning" height="200" src="../Images/Spinner.gif" width="200">
   <div class="container">
-	 <!--<iframe src="../Images/Spinner-1s-200px.svg"></iframe>-->
-	 <img id="spinner" src="../Images/Spinner.gif" v-show="this.loading" alt="spinning" width="200" height="200">
-        <FilmCard  v-show="!error" v-for="film in films"
-            :title="film.title" :description="film.overview" :img="baseUrl + film.poster_path"  :total_pages="this.total_pages" :actual_page="this.actual_page"></FilmCard>
+		<FilmCard  v-for="film in films"  v-show="!error || !loading"
+					  :actual_page="this.actual_page" :description="film.overview" :img="baseUrl + film.poster_path"  :title="film.title" :total_pages="this.total_pages">
+		</FilmCard>
   </div>
-  <div class="d-flex align-items-center" v-if="loading">
-    <strong>Loading...</strong>
+	<button-pagination class="btn-group" v-show="!error" :actual_page="this.actual_page" :total_pages="this.total_pages" @pagination="paginationFather"></button-pagination>
   </div>
-	<button-pagination v-show="!error" @pagination="paginationFather" :total_pages="this.total_pages" :actual_page="this.actual_page"></button-pagination>
-
-  <Footer></Footer>
 </template>
 
 <style scoped>
-
+*{
+  margin: 20px;
+}
+#spinner{
+  align-self: center;
+}
+.main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}
 .container{
 	display: flex;
+	justify-content: center;
 	flex-direction: row;
 	flex-wrap: wrap;
 }
@@ -121,15 +132,6 @@ export default defineComponent({
 	.container {
 		background-color: lightblue;
 	}
-}
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
 }
 
 /* Safari */
@@ -147,6 +149,7 @@ img {
   border-radius: 5px 5px 0 0;
 }
 .btn-group {
+  background-color: plum;
 	padding: 5px;
 	margin-bottom: 10px;
 	display : flex;
@@ -154,28 +157,16 @@ img {
 	gap: 5px;
 	justify-content: center;
 }
-.btn-group button {
-	
-	background-color: #04AA6D; /* Green background */
-	border: 1px solid green; /* Green border */
-	color: white; /* White text */
-	padding: 10px 24px; /* Some padding */
-	cursor: pointer; /* Pointer/hand icon */
-}
-button:disabled{
-	background-color: lightgray;
-	border: 1px solid black;
-}
+
 #spinner{
   margin: auto;
   display: flex;
   justify-content: center;
 }
-.btn-group button:not(:last-child) {
-	border-right: none; /* Prevent double borders */
+
+#title{
+  display: flex;
+  justify-content: center;
 }
 
-.btn-group button:hover:enabled {
-	background-color: #3e8e41;
-}
 </style>

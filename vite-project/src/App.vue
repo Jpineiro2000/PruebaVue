@@ -1,7 +1,8 @@
 <script setup>
 //import HelloWorld from './components/HelloWorld.vue'
+import Footer from "./components/Footer.vue";
+import Header from "./components/Header.vue";
 import FilmDisplay from "./components/FilmDisplay.vue";
-
 </script>
 
 <template>
@@ -14,22 +15,52 @@ import FilmDisplay from "./components/FilmDisplay.vue";
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />-->
-  <FilmDisplay></FilmDisplay>
+  <div class="container">
+	 <div class="header">
+		<Header></Header>
+	 </div>
+	 <div class="main">
+		<FilmDisplay></FilmDisplay>
+		
+	 </div>
+    <div class="footer">
+		<Footer></Footer>
+    </div>
+  </div>
 
 
 </template>
 
 <style scoped>
-/*.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.container{
+	 height: 100%;
+	 width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+	 
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.header{
+  background-color: #747bff;
+  order: 1;
+  height: 50px;
+  width: 100%;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}*/
+
+.main{
+  background-color: rgba(153, 133, 162, 0.84)                                                                                                                                                                                                                                                    ;
+  order : 2;
+  flex-wrap: wrap ;
+  display: flex;
+  min-height: calc(100% - 150px);
+  width: 100%;
+}
+
+.footer{
+  order:3;
+  background-color: red;
+  height: 100px;
+  width: 100%;
+}
+
+
 </style>

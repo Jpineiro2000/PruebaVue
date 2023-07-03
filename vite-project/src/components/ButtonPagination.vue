@@ -45,37 +45,27 @@ export default defineComponent({
 		<button :disabled="this.current_page === this.total_pages" @click="pagination(0)">></button>
 		<button :disabled="this.current_page >= (this.total_pages - 1)" @click="pagination(2)">>></button>
 	</div>
-	
 </template>
 
 <style scoped>
-.btn-group {
-	padding: 5px;
-	margin-bottom: 10px;
-	display : flex;
-	flex-direction: row;
-	gap: 5px;
-	justify-content: center;
-}
+
 .btn-group button {
 	
-	background-color: #04AA6D; /* Green background */
-	border: 1px solid green; /* Green border */
-	color: white; /* White text */
-	padding: 10px 24px; /* Some padding */
-	cursor: pointer; /* Pointer/hand icon */
+	background-color: #04AA6D;
+	border: 1px solid green;
+	color: white;
+	padding: 10px 24px;
+	cursor: pointer;
 }
 button:disabled{
 	background-color: lightgray;
 	border: 1px solid black;
 }
-/* Clear floats (clearfix hack) */
 
 .btn-group button:not(:last-child) {
-	border-right: none; /* Prevent double borders */
+	border-right: none;
 }
 
-/* Add a background color on hover */
 .btn-group button:hover:enabled {
 	background-color: #3e8e41;
 }
