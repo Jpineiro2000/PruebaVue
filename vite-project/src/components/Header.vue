@@ -8,29 +8,43 @@ export default defineComponent({
 			query: ''
 		}
 	},
+ 
 	methods: {
 		 onsubmit() {
-			this.$emit('search', this.query);
+			alert(this.query);
+			this.$emit('onsubmit', this.query);
+		},
+	   myFunction() {
+		  let x = document.getElementById("myTopnav");
+		  if (x.className === "topnav") {
+			 x.className += " responsive";
+		  } else {
+			 x.className = "topnav";
+		  }
 		}
 	}
 })
 </script>
 
 <template>
-	<nav class="topnav">
+	<nav class="topnav" id="myTopnav">
 		<a class="active" href="../../index.html">Home</a>
 		<a href="#about">About</a>
 		<a href="#contact">Contact</a>
 		<div class="search-container">
 			<form @submit.prevent="onsubmit">
-				<input v-model="query" type="text" placeholder="Search.." name="search">
+				<input v-model="query" type="text" placeholder="Search.." id="mySearch" name="search">
 				<button><i class="fa fa-search"></i></button>
 			</form>
 		</div>
+	  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+		 <i class="fa fa-bars"></i>
+	  </a>
 	</nav>
 </template>
 
 <style scoped>
+
 * {box-sizing: border-box;}
 
 body {
@@ -56,6 +70,9 @@ body {
 .topnav a:hover {
 	background-color: #ddd;
 	color: black;
+}
+.topnav .icon {
+  display: none;
 }
 
 .topnav a.active {
@@ -90,20 +107,40 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-	.topnav .search-container {
-		float: none;
-	}
-	.topnav a, .topnav input[type=text], .topnav .search-container button {
-		float: none;
-		display: block;
-		text-align: left;
+	.search-container {
 		width: 100%;
-		margin: 0;
-		padding: 14px;
+	  display: flex;
+	  flex-direction: column;
+	  justify-items: end;
+	}
+  form{
+	 display: flex;
+	 align-items: center;
+	 height: 100%;
+	 align-self: end;
+	 margin-right: 12px;
+  }
+  .topnav{
+	 display: flex;
+	 flex-direction: row;
+	 width: 100%;
+  }
+  #mySearch{
+	 width: 100px;
+	 margin:0;
+  }
+  .topnav a:not(:first-child) {
+	 display: none;
+  }
+  .topnav a.icon {
+	 float: right;
+	 display: flex;
+  }
+	.topnav a, .topnav input[type=text], .topnav .search-container button {
+		margin:0;
 	}
 	.topnav input[type=text] {
 		border: 1px solid #ccc;
 	}
 }
-
 </style>

@@ -9,6 +9,9 @@ import getUrlTheMovieDB from "../getUrlTheMovieDB.js";
 export default defineComponent({
   name: "FilmDisplay",
   components: {ButtonPagination, Footer, Header, FilmCard},
+  props:{
+	 query: String
+  },
   data() {
     return {
 		currentQuery:"",
@@ -26,7 +29,9 @@ export default defineComponent({
 			//Las dimensiones disponibles de los píxeles son de 300 a 500 píxeles
 		error:false,
 	 }
+	 
   },
+  
   methods:{
 		 paginationFather(page){
 			this.getUrl(this.currentQuery, page);
@@ -36,14 +41,21 @@ export default defineComponent({
 			this.currentQuery = query;
 		this.getUrl(this.currentQuery, this.actual_page);
 	 },
-	 
+	 checkError() {
+		if(this.error===true){
+		  document.getElementsByClassName('container')[0].removeChild(document.getElementsByClassName('error')[0]);
+		  alert("Removiendo");
+		  this.error = false;
+		}
+	 },
 	 async getUrl(query, page){
-		
+		this.checkError();
 		this.loading = true;
 		this.films=[];
 		const url = getUrlTheMovieDB(query, page);
 		console.log("actual url : ",url);
 		try {
+		  console.log("Dentro de getURL ",query);
 		  let response = await fetch(url);
 		  if(!response.ok) {
 			 throw new Error(`HTTP error ${response.status}`);
@@ -57,9 +69,12 @@ export default defineComponent({
 		  this.loading = false;
 		  if(this.films.length === 0 && !this.error){
 			 this.myPersonalError('Without coincidences', 'There is not available data');
+			 this.loading = false;
+			 
 		  }
 		}catch (e){
 			this.myPersonalError('Error', 'Please, recharge the page');
+		  this.loading = false;
 		}
 	 },
 	 
@@ -80,13 +95,24 @@ export default defineComponent({
 		cuerpoDiv.appendChild(div);
 	 }
   },
+  watch:{
+	 query(newQuery){
+		console.log("Dentro de watch mi query : "+newQuery)
+		this.search(newQuery);
+	 }
+  },
+
+
    mounted(){
-    // this.useApi(, 0);
-		// console.log(this.getUrl("",1)); //url de discovery y página 1
-		// console.log(this.getUrl("",2));
-		// console.log(this.getUrl("Dolphin",1)); //url de search con query=Dolphin y page=1
-	//	 console.log(this.getUrl(8,null));	//esto devuelve un error
+	 alert(this.query);
+  
 		this.getUrl("",this.actual_page);
+		if (this.query.trim() !== ""){
+		  alert("En FilmDisplay mounted : "+this.query);
+		  this.actual_page = 1;
+		  this.currentQuery = this.query;
+		  this.getUrl(this.currentQuery, this.actual_page);
+		}
   }
 })
 </script>
@@ -96,7 +122,7 @@ export default defineComponent({
 	<div v-show="!error" id="title">
 	  <h1 id="actual_page">Page : {{actual_page}}</h1>
 	</div>
-  <button-pagination class="btn-group" v-show="!error" :actual_page="this.actual_page" :total_pages="this.total_pages" @pagination="paginationFather"></button-pagination>
+<!--  <button-pagination class="btn-group" v-show="!error" :actual_page="this.actual_page" :total_pages="this.total_pages" @pagination="paginationFather"></button-pagination>-->
   <img v-show="loading" id="spinner" alt="spinning" height="200" src="../Images/Spinner.gif" width="200">
   <div class="container">
 		<FilmCard  v-for="film in films"  v-show="!error || !loading"
@@ -128,9 +154,15 @@ export default defineComponent({
 }
 
 @media screen and (max-width: 600px) {
+  *{
+	 margin: 8px 4px 8px 4px;
+  }
 	.container {
 		background-color: lightblue;
 	}
+  #actual_page{
+	 font-size: 20px;
+  }
 }
 
 /* Safari */
@@ -148,7 +180,6 @@ img {
   border-radius: 5px 5px 0 0;
 }
 .btn-group {
-  //background-color: plum;
 	padding: 5px;
 	margin-bottom: 10px;
 	display : flex;

@@ -13,6 +13,7 @@ export default defineComponent({
 		total_pages:Number,
 	},
 	methods:{
+	  // FIX:TODO:
 		 pagination(num){
 			 console.log("Estamos dentro de pagination : "+this.current_page);
 			 this.current_page = this.actual_page;

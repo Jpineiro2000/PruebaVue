@@ -32,13 +32,12 @@ export default defineComponent({
 <template>
     <div class="card">
 		<picture>
-		  <source media="(min-width:500px)" v-bind:srcset="img">
-		  <source media="(min-width:400px)" v-bind:srcset="img">
-		  <img class="card-img-top" v-bind:src="img" v-bind:alt="title" style="width:auto;">
+		  <source media="(min-width:600px)" v-bind:srcset="img"  style="max-width:100%;height:auto;width: 300px">
+		  <img class="card-img-top" v-bind:src="img" v-bind:alt="title" style="max-width:100%;height:auto;">
 		</picture>
       <article class="card-body">
         <p class="card-title"><b>{{title}}</b></p>
-        <pre class="card-text">{{ description }}</pre>
+        <p class="card-text">{{ description }}</p>
         <button @click="showMore">See more</button>
         <div class="descriptions" v-show="computedHide">{{ description }}</div>
       </article>
@@ -55,12 +54,12 @@ export default defineComponent({
 div.descriptions {
   top: 0;
   background-color: rgba(210, 201, 93, 0.84);
-  padding: 50px;
+  padding: 40px;
   position: relative;
-  font-size: 20px;
+  font-size: 15px;
   z-index: 1;
   overflow: auto;
-  width: 200px;
+  width: 130px;
   height: 60px;
 }
 .card-text{
@@ -79,17 +78,39 @@ h5{
   min-width: 300px;
   width: 300px;
   border-radius: 5px;
-  margin: 15px;
-  height: 650px;
-  padding: 2em;
+  margin: 10px;
+  height: auto;
+  max-height: 650px;
 }
 .card-body{
-  height: 150px;
-  //width: 300px;
+  height: auto;
+  max-height: 3000px;
+  padding: 10px;
+  
 }
+
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
+
+@media screen and (max-width: 600px) {
+  img{
+	 height: auto;
+	 width: 300px;
+  }
+  .card{
+	 max-width: 300px;
+	 width: 300px;
+	 /*height: 450px;
+	 padding: 0;*/
+	 margin: 0;
+	 margin-bottom: 20px;
+  }
+  .card-body{
+	 margin-bottom: 25px;
+  }
+}
+
 
 
 </style>
