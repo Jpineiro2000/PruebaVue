@@ -38,7 +38,7 @@ export default defineComponent ({
 	 </div>
 	 <div class="main">
 
-		<FilmDisplay :query="myQuery"></FilmDisplay>
+<!--		<FilmDisplay :query="myQuery"></FilmDisplay>-->
 
 	 </div>
     <div class="footer">
@@ -50,6 +50,7 @@ export default defineComponent ({
 </template>
 
 <style scoped>
+
 .containerApp{
 	 height: 100%;
 	 width: 100%;
