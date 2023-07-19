@@ -5,6 +5,7 @@ export default defineComponent({
   name: "Header",
 	data() {
 		return {
+		  dropdown: true,
 			query: ''
 		}
 	},
@@ -13,7 +14,7 @@ export default defineComponent({
 		 onsubmit() {
 			alert(this.query);
 			this.$emit('onsubmit', this.query);
-		},
+		}
 	}
 })
 </script>
@@ -32,12 +33,14 @@ export default defineComponent({
 	  
 	  <div class="dropdown">
 		 <button class="dropbtn">Right</button>
-		 <div class="dropdown-content">
-			<a href="#">Link 1</a>
-			<a href="#">Link 2</a>
-			<a href="#">Link 3</a>
-		 </div>
+		 <ul class="dropdown-content">
+			<li><a href="#">Link 1</a></li>
+			<li><a href="#">Link 2</a></li>
+			<li><a href="#">Link 3</a></li>
+		 
+		 </ul>
 	  </div>
+	  
 	</nav>
 </template>
 <style scoped>
@@ -53,10 +56,15 @@ body {
 
 .topnav {
 	//overflow: hidden;
+  position: absolute;
   display: flex;
 	background-color: #e9e9e9;
   overflow: auto;
   white-space: nowrap;
+}
+form{
+  position: fixed;
+  right: 0;
 }
 
 .topnav a {
@@ -110,28 +118,30 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-  .dropdown:hover {
-	 display: block;
-  }
+ 
   .dropbtn {
+	 right: 0;
+	 float: right;
 	 background-color: #4CAF50;
 	 color: white;
 	 padding: 16px;
 	 font-size: 16px;
 	 border: none;
+	 position: absolute;
 	 cursor: pointer;
   }
   
   .dropdown {
 	 position: relative;
-	 //display: inline-block;
-	 display: flex;
+	 display: inline-block;
+	 list-style: none;
 	 float:right;
   }
   
   .dropdown-content {
+  	 top:31px;
 	 display: none;
-	 position: absolute;
+	 position: fixed;
 	 right: 0;
 	 background-color: #f9f9f9;
 	 min-width: 160px;
@@ -145,7 +155,9 @@ body {
 	 text-decoration: none;
 	 display: block;
   }
-  
+  ul{
+	 list-style-type: none;
+  }
   .dropdown-content a:hover {background-color: #f1f1f1;}
   
   .dropdown:hover .dropdown-content {
@@ -159,11 +171,14 @@ body {
   .search-container {
 	 width: 100%;
 	 display: flex;
+	 margin-right: 60px;
 	 flex-direction: column;
 	 justify-items: end;
+	 position: relative;
   }
   
   form {
+	 position: absolute;
 	 display: flex;
 	 align-items: center;
 	 height: 100%;
@@ -172,6 +187,9 @@ body {
   }
   
   .topnav {
+	 overflow: auto;
+	 white-space: nowrap;
+	 position: absolute;
 	 display: flex;
 	 flex-direction: row;
 	 width: 100%;

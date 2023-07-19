@@ -61,6 +61,7 @@ export default defineComponent ({
   background-color: #747bff;
   order: 1;
   height: 50px;
+  position: relative;
   width: 100%;
 }
 
