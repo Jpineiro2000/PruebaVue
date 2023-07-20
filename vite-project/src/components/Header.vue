@@ -32,7 +32,8 @@ export default defineComponent({
 		</div>
 	  
 	  <div class="dropdown">
-		 <button class="dropbtn">Right</button>
+		 <button class="dropbtn">    <i class="fa fa-bars"></i>
+		 </button>
 		 <ul class="dropdown-content">
 			<li><a href="#">Link 1</a></li>
 			<li><a href="#">Link 2</a></li>
