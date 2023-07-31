@@ -11,14 +11,7 @@ export default defineComponent({
   },
   data() {
 	 return {baseUrl: "https://image.tmdb.org/t/p/w300"}
-	 
-  }/*,
-  
-  methods: {},
-  
-  mounted() {
-	 alert("Mounting FilmDisplay");
-  }*/
+  }
 })
 </script>
 
