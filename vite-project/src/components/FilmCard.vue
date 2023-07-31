@@ -1,7 +1,7 @@
 <script>
 import {defineComponent} from 'vue'
 //Hacer paginación primero, utilizando los eventos del hijo al padre.
-//Arreglar el css , lo que tenga que ver con el conjunto de cards va en el padre. Usar Flex o grid
+//Arreglar el css, lo que tenga que ver con el conjunto de cards va en el padre. Usar Flex o grid
 export default defineComponent({
   data(){
     return{
@@ -13,8 +13,8 @@ export default defineComponent({
     title:String,
     img:String,
     description:String,
-    total_pages:Number,
-    actual_page:Number,
+   /* total_pages:Number,
+    actual_page:Number,*/
   },
   computed: {
     computedHide: function () {
@@ -32,7 +32,7 @@ export default defineComponent({
 <template>
     <div class="card">
 		<picture>
-		  <source media="(min-width:600px)" v-bind:srcset="img"  style="max-width:100%;height:auto;width: 300px">
+		  <source media="(min-width:400px)" v-bind:srcset="img"  style="max-width:100%;height:auto;width: 300px">
 		  <img class="card-img-top" v-bind:src="img" v-bind:alt="title" style="max-width:100%;height:auto;">
 		</picture>
       <article class="card-body">
@@ -54,9 +54,9 @@ export default defineComponent({
 div.descriptions {
   top: 0;
   background-color: rgba(210, 201, 93, 0.84);
-  padding: 40px;
+  padding: 35px;
   position: relative;
-  font-size: 15px;
+  font-size: 20px;
   z-index: 1;
   overflow: auto;
   width: 130px;
@@ -103,8 +103,7 @@ h5{
 	 width: 300px;
 	 /*height: 450px;
 	 padding: 0;*/
-	 margin: 0;
-	 margin-bottom: 20px;
+	 margin: 0 0 20px;
   }
   .card-body{
 	 margin-bottom: 25px;

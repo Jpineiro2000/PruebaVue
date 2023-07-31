@@ -14,6 +14,20 @@ export default defineComponent({
 	},
 	methods:{
 	  // FIX:TODO:
+	  nextPage(){
+		 this.current_page = this.actual_page;
+		 this.$emit('pagination',this.current_page++);
+	  },
+	  previousPage(){
+		 this.current_page = this.actual_page;
+		 this.$emit('pagination',this.current_page--);
+	  },
+	  lastPage(){
+		 this.$emit('pagination',this.total_pages);
+	  },
+	  firstPage(){
+		 this.$emit('pagination',1);
+	  },
 		 pagination(num){
 			 console.log("Estamos dentro de pagination : "+this.current_page);
 			 this.current_page = this.actual_page;
@@ -40,12 +54,18 @@ export default defineComponent({
 </script>
 
 <template>
-	<div class="btn-group">
-		<button :disabled="this.current_page < 3" @click="pagination(3)">&lt;&lt;</button>
-		<button :disabled="this.current_page === 1" @click="pagination(1)">&lt;</button>
-		<button :disabled="this.current_page === this.total_pages" @click="pagination(0)">></button>
-		<button :disabled="this.current_page >= (this.total_pages - 1)" @click="pagination(2)">>></button>
-	</div>
+<!--	<div class="btn-group">
+		<button :disabled="this.current_page < 3" @click="firstPage">&lt;&lt;</button>
+		<button :disabled="this.current_page === 1" @click="previousPage">&lt;</button>
+		<button :disabled="this.current_page === this.total_pages" @click="nextPage">></button>
+		<button :disabled="this.current_page >= (this.total_pages - 1)" @click="lastPage">>></button>
+	</div>-->
+  <div class="btn-group">
+	 <button :disabled="this.current_page < 3" @click="pagination(3)">&lt;&lt;</button>
+	 <button :disabled="this.current_page === 1" @click="pagination(1)">&lt;</button>
+	 <button :disabled="this.current_page === this.total_pages" @click="pagination(0)">></button>
+	 <button :disabled="this.current_page >= (this.total_pages - 1)" @click="pagination(2)">>></button>
+  </div>
 </template>
 
 <style scoped>
