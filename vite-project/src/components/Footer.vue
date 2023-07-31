@@ -1,6 +1,5 @@
 <script>
 import {defineComponent} from 'vue'
-
 export default defineComponent({
   name: "Footer"
 })
@@ -25,8 +24,6 @@ export default defineComponent({
   }
   
   footer {
-	 //padding: 3px;
-	 //background-color: #c78a72;
 	 color: white;
 	 display: flex;
 	 justify-content: center;

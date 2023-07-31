@@ -14,10 +14,7 @@ export default defineComponent({
 		myQuery: '',
 		currentQuery: "",
 		loading: false,
-		
 		mainURL: "https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17",
-		//columns:['Title','Image','Description',''],
-		//loading : true,
 		total_pages: 0,
 		//Las páginas están a 500 a pesar de que tiene muchas páginas más debido a que la this.mainURL de la API no permite acceder a más.
 		actual_page: 1,
@@ -35,7 +32,6 @@ export default defineComponent({
 	 toSon(query) {
 		this.myQuery = query;
 		this.search(this.myQuery);
-		//alert("Dentro de App : " + this.myQuery);
 	 },
 	 search(query){
 		this.actual_page = 1;
@@ -45,7 +41,6 @@ export default defineComponent({
 	 checkError() {
 		if(this.error===true){
 		  document.getElementsByClassName('containFilms')[0].removeChild(document.getElementsByClassName('error')[0]);
-		//  alert("Removiendo");
 		  this.error = false;
 		}
 	 },
@@ -71,7 +66,6 @@ export default defineComponent({
 		  if(this.films.length === 0 && !this.error){
 			 this.myPersonalError('Without coincidences', 'There is not available data');
 			 this.loading = false;
-			 
 		  }
 		}catch (e){
 		  this.myPersonalError('Error', 'Please, recharge the page');
@@ -105,10 +99,8 @@ export default defineComponent({
   
   
   mounted(){
-	// alert(this.myQuery);
 	 this.getUrl("",this.actual_page);
 	 if (this.myQuery.trim() !== ""){
-	//	alert("En app mounted : "+this.myQuery);
 		this.actual_page = 1;
 		this.currentQuery = this.myQuery;
 		this.getUrl(this.currentQuery, this.actual_page);}
@@ -138,7 +130,6 @@ export default defineComponent({
 		<div v-show="!error" id="title">
 		  <h1 id="actual_page">🎞🎥 Page : {{ actual_page }}</h1>
 		</div>
-		<!--  <button-pagination class="btn-group" v-show="!error" :actual_page="this.actual_page" :total_pages="this.total_pages" @pagination="paginationFather"></button-pagination>-->
 		<img v-show="loading" id="spinner" alt="spinning" height="200" src="./Images/Spinner.gif" width="200">
 		<div class="containFilms">
 		  <FilmDisplay :films="films" v-show="!error || !loading"></FilmDisplay>

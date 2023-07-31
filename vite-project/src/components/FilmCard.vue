@@ -1,7 +1,5 @@
 <script>
 import {defineComponent} from 'vue'
-//Hacer paginación primero, utilizando los eventos del hijo al padre.
-//Arreglar el css, lo que tenga que ver con el conjunto de cards va en el padre. Usar Flex o grid
 export default defineComponent({
   data(){
     return{
@@ -41,7 +39,6 @@ export default defineComponent({
       </article>
     </div>
 </template>
-
 
 <style scoped>
 
@@ -99,15 +96,10 @@ h5{
   .card{
 	 max-width: 300px;
 	 width: 300px;
-	 /*height: 450px;
-	 padding: 0;*/
 	 margin: 0 0 20px;
   }
   .card-body{
 	 margin-bottom: 25px;
   }
 }
-
-
-
 </style>
