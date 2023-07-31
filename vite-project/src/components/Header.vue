@@ -5,14 +5,12 @@ export default defineComponent({
   name: "Header",
   data() {
 	 return {
-		dropdown: true,
 		query: ''
 	 }
   },
   
   methods: {
 	 onsubmit() {
-		alert(this.query);
 		this.$emit('onsubmit', this.query);
 	 }
   }

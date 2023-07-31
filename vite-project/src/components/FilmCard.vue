@@ -13,8 +13,6 @@ export default defineComponent({
     title:String,
     img:String,
     description:String,
-   /* total_pages:Number,
-    actual_page:Number,*/
   },
   computed: {
     computedHide: function () {

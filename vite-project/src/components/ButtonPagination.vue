@@ -5,7 +5,6 @@ export default defineComponent({
 	name: "ButtonPagination",
 	data() {
 		return {
-			current_page: 1,
 		}
 	},
 	props:{
@@ -15,57 +14,61 @@ export default defineComponent({
 	methods:{
 	  // FIX:TODO:
 	  nextPage(){
-		 this.current_page = this.actual_page;
-		 this.$emit('pagination',this.current_page++);
+		 let currentPage = this.actual_page;
+		 this.$emit('pagination',++currentPage);
 	  },
 	  previousPage(){
-		 this.current_page = this.actual_page;
-		 this.$emit('pagination',this.current_page--);
+		 let currentPage = this.actual_page;
+		 
+		 this.$emit('pagination',--currentPage);
 	  },
 	  lastPage(){
+		 console.log("Current page inside function Pagination: lastPage");
+		 
 		 this.$emit('pagination',this.total_pages);
 	  },
 	  firstPage(){
+		 console.log("Current page inside function Pagination: firstPage");
+		 
 		 this.$emit('pagination',1);
 	  },
-		 pagination(num){
-			 console.log("Estamos dentro de pagination : "+this.current_page);
-			 this.current_page = this.actual_page;
+		/* pagination(num){
+			
 			switch (num) {
 				case 0:
-					this.current_page++;
+					this.actual_page++;
 					break;
 				case 1:
-					this.current_page--;
+					this.actual_page--;
 					break;
 				case 2:
-					this.current_page = this.total_pages;
+					this.actual_page = this.total_pages;
 					break;
 				case 3:
-					this.current_page = 1;
+					this.actual_page = 1;
 					break;
 			}
-			 console.log("Estamos dentro de pagination antes de emit : "+this.current_page);
+			 console.log("Estamos dentro de pagination antes de emit : "+this.actual_page);
 			 
-			 this.$emit('pagination',this.current_page);
-		},
+			 this.$emit('pagination',this.actual_page);
+		},*/
 	}
 })
 </script>
 
 <template>
-<!--	<div class="btn-group">
-		<button :disabled="this.current_page < 3" @click="firstPage">&lt;&lt;</button>
-		<button :disabled="this.current_page === 1" @click="previousPage">&lt;</button>
-		<button :disabled="this.current_page === this.total_pages" @click="nextPage">></button>
-		<button :disabled="this.current_page >= (this.total_pages - 1)" @click="lastPage">>></button>
-	</div>-->
-  <div class="btn-group">
-	 <button :disabled="this.current_page < 3" @click="pagination(3)">&lt;&lt;</button>
-	 <button :disabled="this.current_page === 1" @click="pagination(1)">&lt;</button>
-	 <button :disabled="this.current_page === this.total_pages" @click="pagination(0)">></button>
-	 <button :disabled="this.current_page >= (this.total_pages - 1)" @click="pagination(2)">>></button>
-  </div>
+	<div class="btn-group">
+		<button :disabled="this.actual_page < 3" @click="firstPage">&lt;&lt;</button>
+		<button :disabled="this.actual_page === 1" @click="previousPage">&lt;</button>
+		<button :disabled="this.actual_page === this.total_pages" @click="nextPage">></button>
+		<button :disabled="this.actual_page >= (this.total_pages - 1)" @click="lastPage">>></button>
+	</div>
+<!--  <div class="btn-group">
+	 <button :disabled="this.actual_page < 3" @click="pagination(3)">&lt;&lt;</button>
+	 <button :disabled="this.actual_page === 1" @click="pagination(1)">&lt;</button>
+	 <button :disabled="this.actual_page === this.total_pages" @click="pagination(0)">></button>
+	 <button :disabled="this.actual_page >= (this.total_pages - 1)" @click="pagination(2)">>></button>
+  </div>-->
 </template>
 
 <style scoped>

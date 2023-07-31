@@ -7,7 +7,7 @@ export default defineComponent({
   name: "FilmDisplay",
   components: {FilmCard},
   props: {
-	 films: [],
+	 films: Array,
   },
   data() {
 	 return {baseUrl: "https://image.tmdb.org/t/p/w300"}
