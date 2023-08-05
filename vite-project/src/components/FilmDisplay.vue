@@ -9,6 +9,12 @@ export default defineComponent({
   props: {
 	 films: Array,
   },
+  methods:{
+	 openFilmPage(filmid){
+		console.log(filmid);
+		window.location.href = "/Films/index.html?filmid="+filmid;
+	 }
+  },
   data() {
 	 return {baseUrl: "https://image.tmdb.org/t/p/w300"}
   }
@@ -17,7 +23,7 @@ export default defineComponent({
 
 <template>
   <div class="container">
-	 <FilmCard v-for="film in films"
+	 <FilmCard @click="openFilmPage(film.id)" v-for="film in films"
 				  :description="film.overview" :img="baseUrl + film.poster_path" :title="film.title">
 	 </FilmCard>
   </div>
