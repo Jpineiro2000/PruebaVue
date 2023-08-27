@@ -19,7 +19,6 @@ export default defineComponent({
 		//Las páginas están a 500 a pesar de que tiene muchas páginas más debido a que la this.mainURL de la API no permite acceder a más.
 		actual_page: 1,
 		films: [],
-		baseUrl: "https://image.tmdb.org/t/p/w300",
 		//Al poner las imágenes en 300 en vez de 400. Hay algunas que no admiten este formato y la img se queda en null
 		//Las dimensiones disponibles de los píxeles son de 300 a 500 píxeles
 		error: false,

@@ -3,46 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script>
-        const options = {method: 'GET', headers: {accept: 'application/json'}};
+    <script type="module">
 
-        fetch('https://api.themoviedb.org/3/movie/346698/reviews?language=en-US&page=1', options)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
+        import getReviewFilm from "./Javascript/getReviewsFilmId.js";
+        import getFilmDetails from "./Javascript/getFilmID.js";
+
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('filmid')
+        console.log(id);
+
+        const url = getReviewFilm(id);
+        const url2 = getFilmDetails(id);
+
+        console.log("review url : ", url);
+        console.log("details url : ", url2);
+        await getUrlDetails(id);
+        await getUrlReviewsFilm(id);
+
+        function checkError() {
+            if (this.error === true) {
+                document.getElementsByClassName('containFilms')[0].removeChild(document.getElementsByClassName('error')[0]);
+                this.error = false;
+            }
+        }
+
+        async function getUrlDetails(id) {
+            /*this.checkError();*/
+            let baseUrl = "https://image.tmdb.org/t/p/w300";
+            const url = getFilmDetails(id);
+            try {
+                console.log("Dentro de getURL Details", id);
+                let response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error ${response.status}`);
+                }
+                //throw ('There is a problem in catching the data from the api');
+                let data = await response.json();
+                console.log(data);
+
+                document.getElementById('mainImg').src = baseUrl + data.poster_path;
+                document.getElementsByTagName("h1")[0].innerHTML = data.title;
+                document.querySelector(".description p").innerHTML = data.overview;
+                document.getElementById('release').innerHTML += data.release_date;
+                document.querySelector(".popularity p").innerHTML = data.popularity;
+                let genres = data.genres;
+                console.log("los géneros son : ", genres[0].name);
+                for (let i = 0; i < genres.length; i++) {
+                    let genre = document.createElement("p");
+                    let textGenre = document.createTextNode(genres[i].name);
+                    genre.appendChild(textGenre);
+                    document.getElementsByClassName("genres")[0].appendChild(genre);
+                }
+                document.querySelector(".votes p").innerHTML = data.vote_average;
+                /* if (this.films.length === 0 && !this.error) {
+							this.myPersonalError('Without coincidences', 'There is not available data');
+							this.loading = false;
+					  }*/
+            } catch (e) {
+                /*this.myPersonalError('Error', 'Please, recharge the page');*/
+                alert('Please, recharge the page');
+                //this.loading = false;
+            }
+        }
+
+        async function getUrlReviewsFilm(id) {
+            /*this.checkError();*/
+            let reviews = [];
+            const url = getReviewFilm(id);
+            try {
+                let response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error ${response.status}`);
+                }
+                //throw ('There is a problem in catching the data from the api');
+                let data = await response.json();
+                reviews = data.results;
+                let divReview = document.getElementsByClassName("review")[0];
+                console.log("la div review : ", divReview);
+                console.log("Reviews  : ", reviews);
+                for (let i = 0; i < reviews.length; i++) {
+                    let divIndividualReview = document.createElement("div");
+                    let author = document.createElement("h3");
+                    let textAuthor = document.createTextNode(reviews[i].author);
+                    author.appendChild(textAuthor);
+                    divIndividualReview.appendChild(author);
+                    divReview.appendChild(divIndividualReview);
+                    divIndividualReview.setAttribute("class", "IndividualReview");
+
+                    let review = document.createElement("p");
+                    let textReview = document.createTextNode(reviews[i].content);
+                    review.appendChild(textReview);
+                    divIndividualReview.appendChild(review);
+                    divReview.appendChild(divIndividualReview);
+                }
+
+
+                /* if (this.films.length === 0 && !this.error) {
+							this.myPersonalError('Without coincidences', 'There is not available data');
+							this.loading = false;
+					  }*/
+            } catch (e) {
+                /*this.myPersonalError('Error', 'Please, recharge the page');*/
+                console.error(e);
+                //this.loading = false;
+            }
+        }
+
+        function myPersonalError(titleError, message) {
+            this.error = true;
+            const div = document.createElement("div");
+            div.setAttribute('class', 'error');
+            div.setAttribute('style', 'width:100%;background-color:#ffb0b0;text-align:center;');
+            let ertitle = document.createElement('h2');
+            let erp = document.createElement('p');
+            let textp = document.createTextNode(message);
+            let texttitle = document.createTextNode(titleError);
+            erp.appendChild(textp);
+            ertitle.appendChild(texttitle);
+            div.appendChild(ertitle);
+            div.appendChild(erp);
+            const cuerpoDiv = document.getElementsByClassName('containFilms')[0];
+            cuerpoDiv.appendChild(div);
+        }
+
     </script>
+
     <style>
         body {
             display: flex;
             flex-wrap: wrap;
         }
 
-        .main {
-            margin-left: 60px;
-            margin-right: 60px;
+        .IndividualReview {
+            display: -webkit-box;
+            max-width: 1600px;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .content-noreviews{
+
+        .IndividualReview * {
+            margin: 20px;
+        }
+
+        /*  .popularity,.votes{
+				  display: flex;
+				  flex-direction: row;
+				  gap:30px;
+			 }*/
+        .main {
+            margin: auto;
+            background-color: rgba(227, 217, 217, 0.8);
+        }
+        @media screen and (max-width: 600px) {
+            .main{
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            .content-noreviews{
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+            }
+            .anotherDiv{
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+            .content-img{
+                margin: 0;
+            }
+        }
+
+        .content-noreviews {
             display: flex;
         }
+
         .content {
             display: flex;
             flex-direction: column;
             width: 60%;
-            margin:10px;
+            margin: 10px;
+        }
+        
+
+        .anotherDiv {
+            display: flex;
+            flex-direction: row;
+            gap: 200px;
         }
 
-        .content-img{
+        .content-img {
             margin: 10px 20px 10px 10px;
         }
+
         img {
             float: left;
-            
+
+        }
+
+        .genres {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
         }
 
         h1 {
             float: right;
         }
-        .comments{
+
+        .comments {
             margin: 40px 20px 20px;
             width: 90%;
         }
@@ -52,26 +225,28 @@
 <div class="main">
     <div class="content-noreviews">
 
-        <div class="content-img"><img src="../../src/Images/img_avatar2.png" alt=""></div>
+        <div class="content-img"><img id="mainImg" src="../../src/Images/img_avatar2.png" alt=""></div>
 
         <div class="content">
             <h1>Film title</h1>
             <div class="description">
                 <h2>Description</h2>
-                <p>When his attempt to save his family inadvertently alters the future, Barry Allen becomes trapped in a
-                    reality in which General Zod has returned and there are no Super Heroes to turn to. In order to save
-                    the
-                    world that he is in and return to the future that he knows, Barry's only hope is to race for his
-                    life.
-                    But will making the ultimate sacrifice be enough to reset the universe?</p>
-            </div>
-            <div class="popularity">
-                <h2>Popularity</h2>
                 <p></p>
             </div>
-            <div class="votes">
-                <h2>Vote average</h2>
-                <p></p>
+            <p id="release"><b>Release date :</b></p>
+
+            <div class="anotherDiv">
+                <div class="popularity">
+                    <h2>Popularity</h2>
+                    <p></p>
+                </div>
+                <div class="votes">
+                    <h2>Vote average</h2>
+                    <p></p>
+                </div>
+            </div>
+            <h2>Genres</h2>
+            <div class="genres">
             </div>
 
         </div>
@@ -79,59 +254,9 @@
     </div>
     <div class="comments">
         <h2>Reviews</h2>
-        <p>
-            Now I know that you are not supposed to put baby in a corner, but is a microwave ok? (Mind you, I've been on
-            enough flights lately to find that latter idea has definite merit!). Anyway, this takes a while to get going
-            as we are introduced to "Barry" (Ezra Miller) and taken through the family scenario that led his mother to
-            be slaughtered in a burglary and to his father being charged with the murder. Desperate to save his dad from
-            the chair and and to reincarnate mom, he decides to use his great speed to take on time itself! Despite
-            being warned against this potentially reckless action by "Batman" (the most fleeting of appearances from Ben
-            Affleck) he goes for it; gets knocked out of the timeline and finds himself face to face with - himself
-            (only much better looking with wavy hair). This isn't the only thing that's changing on the old space-time
-            continuum and shortly after, "General Zod" (Michael Shannon) arrives bent on avenging the destruction of his
-            home world of "Krypton" on the people of Earth. "Barry" has to think on his nimble feet, and try to assemble
-            what he can of the "Justice League" to combat this threat. Turns out "Bruce Wayne" (now Michael Keaton) has
-            rather let himself go and "Superman" is being held in an impenetrable metal scrotum in Siberia. Time to
-            galvanise and get a-rescuing before his future, all of their futures, are lost. Can they all save the world?
-            I liked this film. It's got loads of action, plenty of pith in a script that is at the more adult (without
-            loads of expletives) end of the spectrum and Miller has the "P" word. Personality. They are clearly enjoying
-            this, and there is loads of charisma emanating from both performances from a star who bucks the normal trend
-            of being handsome but rather wooden. Miller is the former, certainly, but they bring life to the role. It's
-            fun, and abetted by a story that has some weight and plenty of pace to it, we are taken on a series of
-            lightly comedic adventures that make 2 hours and 20 minutes quite literally whizz by. Sasha Calle gives us
-            some diversion from the Ezra show as Superman's cousin - no slouch in a fight either, and Keaton does fine
-            as he rehabilitates his disillusioned "Batman" character using his gadgets and gizmos to great effect. It's
-            so much better than I was expecting and I have to say that I enjoyed the quirkiness of Miller's
-            interpretation of "Barry" - nowhere near as sterile and simpering as Grant Gustin's pure as the driven snow
-            portrayal. The multiverse can keep on inventing and reinventing scenarios and the visual effects can work
-            wonders making just about anything possible - but without strong and personable characters then I am sure I
-            will just bore of the relentless repetition of these stories. Miller is different. Sure, we all know of
-            their much publicised flaws, but I hope the studio look past that and commit to a sequel that allows this
-            actor to continue to do what they do well here - and that's to entertain us. Needs a big screen, it will
-            look very ordinary on the telly.
-        </p>
-        <p>_The Flash_. First announced in 2014 and released in mid-2023, it is arguably one of the worst DC movies to
-            this date. Throughout all the problems, the most incomprehensible is certainly how Warner kept allowing such
-            a person as Ezra Miller to be cast as the main role to be the face of a hero. With a budget of $200 million
-            they were able to deliver the worst possible CGI ever seen, and with it a crumbled plot that wishes for more
-            of everything but Flash. Michael Keaton has done a brilliant performance within this movie as a throwback to
-            the 89's Batman. And with it, the new addition to the Justice League, Sasha Calle has done a fantastic job
-            as Supergirl (Kara Zor-El), but both get rushed plot points that makes the audience wish for more of their
-            screen time or even a solo movie and not the teenage nuisance that Barry Allen is. One minute, Supergirl
-            rushes out ignoring everything, the other she's at the door regretting her decision and trying to help the
-            rest of the characters. The same can be said about Michael Keaton's character. The movie dives into the
-            concept of time and its dangerous potential, later forgetting everything about it and labeling it
-            "multiverse" instead, following Marvel's recent movies like _Doctor Strange in the Multiverse of Madness_
-            and _Spider-Man: No Way Home_ and not adding a single spark of creativity with it. But those movies at least
-            have decent scores, the music within this one must have been selected from a random kid's playlist... The
-            movie is also 2h 24m long, being completely unnecessary. Various scenes are completly descartable, an action
-            scene at the start was put there with no thought whatsoever and is 15m of wasted narrative that could be
-            used to invest in Supergirl's story (if she is here to stay). Iris West has no reason to be put into the
-            movie. And for some reason they decided to make a bunch of cameos using CGI, and as previously said, that
-            didn't go well. In the end, DC is still the same mess. They can't properly build a plot and create a movie
-            that sustains its own beliefs. Ben Affleck's Batman, at the start, said we can't change our past due to the
-            fact that those key moments that leave scars are the moments that build our foundation and make us who we
-            are. It seems that Barry Allen didn't learn shit from this two-hour journey.</p>
+        <div class="review">
+        </div>
+
     </div>
 </div>
 
