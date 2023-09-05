@@ -28,14 +28,14 @@
         await getUrlReviewsFilm(id);
 
         function checkError() {
-            if (this.error === true) {
+            if (error === true) {
                 document.getElementsByClassName('main')[0].removeChild(document.getElementsByClassName('error')[0]);
-                this.error = false;
+                error = false;
             }
         }
 
         async function getUrlDetails(id) {
-            //  this.checkError();
+              this.checkError();
             let baseUrl = "https://image.tmdb.org/t/p/w300";
             const url = getFilmDetails(id);
             try {
@@ -62,19 +62,19 @@
                     document.getElementsByClassName("genres")[0].appendChild(genre);
                 }
                 document.querySelector(".votes p").innerHTML = data.vote_average;
-                if (data.title === "" && !this.error) {
-                    this.myPersonalError('Without coincidences', 'There is not available data');
-                    this.loading = false;
+                if (data.title === "" && !error) {
+                    myPersonalError('Without coincidences', 'There is not available data');
+                    loading = false;
                 }
             } catch (e) {
-                /*this.myPersonalError('Error', 'Please, recharge the page');*/
+                myPersonalError('Error', 'Please, recharge the page');
                 alert('Please, recharge the page');
-                //this.loading = false;
+                loading = false;
             }
         }
 
         async function getUrlReviewsFilm(id) {
-            /*this.checkError();*/
+            checkError();
             let reviews = [];
             const url = getReviewFilm(id);
             try {
@@ -90,6 +90,8 @@
                 console.log("Reviews  : ", reviews);
                 for (let i = 0; i < reviews.length; i++) {
                     let divIndividualReview = document.createElement("div");
+                    let titleImg = document.createElement("div");
+                    
                     let author = document.createElement("h3");
                     let textAuthor = document.createTextNode(reviews[i].author);
                     author.appendChild(textAuthor);
@@ -99,12 +101,8 @@
                     svg.className = "svg_feedback";
                     svg.width = 40;
                     svg.height = 40;
-                    divIndividualReview.appendChild(svg);
-                    divIndividualReview.appendChild(author);
-
-                    divReview.appendChild(divIndividualReview);
-                    divIndividualReview.setAttribute("class", "IndividualReview");
-
+                    titleImg.appendChild(svg);
+                    titleImg.appendChild(author);
                     let divReviewCreateDate = document.createElement("div");
 
                     console.log(reviews[i].created_at);
@@ -118,30 +116,34 @@
                     divReviewCreateDate.appendChild(created_date);
 
                     divIndividualReview.appendChild(divReviewCreateDate);
-                    
+
+                    divIndividualReview.appendChild(titleImg);
+
+                    divReview.appendChild(divIndividualReview);
+                    divIndividualReview.setAttribute("class", "IndividualReview");
+
+
                     let review = document.createElement("p");
                     let textReview = document.createTextNode(reviews[i].content);
                     review.appendChild(textReview);
                     divIndividualReview.appendChild(review);
-
-                 
-
+                    
                     divReview.appendChild(divIndividualReview);
                 }
                 
                 /* if (this.films.length === 0 && !this.error) {
-							this.myPersonalError('Without coincidences', 'There is not available data');
-							this.loading = false;
-					  }*/
+							myPersonalError('Without coincidences', 'There is not available data');
+							loading = false;
+                 }*/
             } catch (e) {
-                this.myPersonalError('Error', 'Please, recharge the page');
+                myPersonalError('Error', 'Please, recharge the page');
                 console.error(e);
-                //this.loading = false;
+                loading = false;
             }
         }
 
         function myPersonalError(titleError, message) {
-            this.error = true;
+            error = true;
             const div = document.createElement("div");
             div.setAttribute('class', 'error');
             div.setAttribute('style', 'width:100%;background-color:#ffb0b0;text-align:center;');
@@ -160,6 +162,15 @@
     </script>
 
     <style>
+        .description:hover, .genres:hover,.popularity:hover,.votes:hover,.IndividualReview:hover,#release:hover{
+            box-shadow: 15px 15px black;
+            background-color: #f1cb76;
+
+        }
+        #release:hover{
+            background-color: #11bda9;
+
+        }
         .description, .genres, .popularity, .votes,  .IndividualReview , #release{
             background-color: wheat;
             box-shadow: 4px 4px #e6e6e6;
@@ -222,7 +233,7 @@
         .IndividualReview * {
             margin: 20px;
             display: flex;
-            column-gap: 30px;
+            //column-gap: 30px;
         }
 
 
@@ -301,7 +312,7 @@
             border-radius: 5px;
             box-shadow: 4px 4px #888888;
             text-align: center;
-            width: 200px;
+            width: 204px;
             float: right;
         }
         
