@@ -1,10 +1,31 @@
-.description:hover, .genres:hover, .popularity:hover, .votes:hover, .IndividualReview:hover, #release:hover {
-    box-shadow: 15px 15px black;
-    background-color: #f1cb76;
+body {
+    font-family: 'Playfair Display', serif;
+}
+.main {
+    padding: 0;
+    margin: auto;
+    background-color: #f5f5f5;
 }
 
-#release:hover {
-    background-color: #11bda9;
+.title_description{
+    display: flex;
+    flex-direction: row;
+}
+.description{
+    background-color: wheat;
+    padding: 10px;
+}
+#mainImg{
+    width: 300px;
+    height: auto;
+}
+.title_description img{
+    margin: 20px 10px 10px;
+}
+
+.description:hover, .genres:hover, .popularity:hover, .votes:hover, .IndividualReview:hover, #release:hover {
+    box-shadow: 10px 10px black;
+    background-color: #f1cb76;
 }
 
 .description, .genres, .popularity, .votes, .IndividualReview, #release {
@@ -12,293 +33,255 @@
     box-shadow: 4px 4px #e6e6e6;
     border-radius: 5px;
     padding: 5px 20px;
-    margin: 20px;
     font-size: 20px;
 }
-
-.titleImg {
-    float: left;
-}
-
-.divReviewCreateDate {
-    float: right;
-}
-
-.popularity img, .votes img {
-    display: flex;
-    align-self: center;
-}
-
-.popularity, .votes {
-    width: 307px;
-    padding-bottom: 40px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-content: center;
-    font-size: 20px;
-}
-
-.IndividualReview h3 {
-    font-size: 30px;
-}
-
-.genretiquette p {
-    color: #000000;
-    text-align: center;
-}
-
-body {
-    font-family: 'Playfair Display', serif;
-}
-
-.genretiquette {
-    margin: 10px;
-}
-
-#mainImg {
-    box-shadow: 4px 4px #e6e6e6;
-    border-radius: 5px;
-    width: auto;
-}
-
-#mainImg:hover {
-    box-shadow: 15px 15px black;
-}
-
-.IndividualReview {
-    margin: 20px;
-    display: flex;
-    max-width: 1600px;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.IndividualReview h3 {
-    text-transform: capitalize;
-}
-
 #release {
-    font-size: 25px;
     padding: 10px;
     background-color: #35EEDDFF;
     border-left-style: solid;
     border-color: blue;
     border-radius: 0 4px 4px 0;
-    width: 300px;
+    width: 280px;
 }
-
-.IndividualReview * {
-    margin: 20px;
-    display: flex;
-}
-
-.main {
-    padding: 100px;
-    margin: auto;
-    background-color: #f5f5f5;
-}
-
-.content-noreviews {
-    display: flex;
-    width: 90%;
-    justify-content: center;
-}
-
-.content {
+.anotherDiv{
     display: flex;
     flex-direction: column;
+    gap: 20px;
+}
+.votes,.popularity{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
     justify-content: center;
-    width: 60%;
-    margin: 10px;
 }
-
-.anotherDiv {
+.votes img ,.popularity img{
+    margin: auto;
+    padding-bottom: 15px;
+}
+.genres{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.comments h2{
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 30px;
+}
+.IndividualReview{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.titleImg{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.content-img {
-    margin: 10px 20px 10px 10px;
-    padding: 50px;
-}
-
-img {
-    float: left;
-    margin: 0;
-}
-
-
-.types {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
     align-items: baseline;
 }
+ .titleImg img{
+     padding: 15px;
+     margin: auto;
+ }
 
-.genres h2 {
-    text-align: center;
-}
-
-h1 {
-    float: right;
-    font-size: 40px;
-}
-
-.review {
-    display: flex;
-    flex-direction: column;
-    column-gap: 30px;
-}
-
-.description img {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.comments {
-    margin: 40px 20px 20px;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    column-gap: 30px;
-}
-
-.comments h2 {
-    font-size: 35px;
-}
-
-.divReviewCreateDate {
+.divReviewCreateDate{
+    width: 250px;
     background-color: #c5d6e1;
     border-radius: 5px;
     box-shadow: 4px 4px #888888;
     text-align: center;
-    max-width: 204px;
     float: right;
 }
 
 @media screen and (min-width: 1000px) {
-    .anotherDiv {
-        gap: 30px;
-    }
-}
-
-@media screen and (min-width: 800px ) {
-    /*genres{
-                 display: flex;
-                 flex-direction: column;
-                 align-items: center;
-             }*/
-    h2, h3 {
-        font-size: 35px;
+    .description:hover, .genres:hover, .popularity:hover, .votes:hover, .IndividualReview:hover, #release:hover {
+        box-shadow: 15px 15px black;
+        background-color: #f1cb76;
     }
 
-    p {
-        font-size: 30px;
+    #release:hover {
+        background-color: #11bda9;
     }
-
-    .popularity, .votes {
-        padding-bottom: 20px;
-        background-color: #eea8a8;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .popularity, .votes {
-        padding-bottom: 20px;
-        background-color: #eea8a8;
-    }
-
-    body {
-        display: flex;
-    }
-
-    /* .genres{
-         display: flex;
-         flex-direction: column;
-        align-items: center;
-     }*/
-    h1 {
-        color: #000000;
-    }
-
-    .IndividualReview {
-        min-width: 250px;
-        padding: 0;
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-bottom: 20px;
-        max-height: 50px;
-    }
-
-    #mainImg {
-        /*  width: auto;
-          height: auto;*/
-    }
-
-    .content-img {
-        padding: 0;
-    }
-
-    .main {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        background-color: #ffffff;
-    }
-
-    .description img {
-        width: 30px;
-        height: 30px;
-    }
-
-    h2, h3 {
+    .genres p,.popularity p,.votes p{
         font-size: 25px;
     }
 
-    p {
+    .description, .genres, .popularity, .votes, .IndividualReview, #release {
+        background-color: wheat;
+        box-shadow: 4px 4px #e6e6e6;
+        border-radius: 5px;
+        padding: 5px 20px;
+        margin: 20px;
+        font-size: 20px;
+    }
+
+    .titleImg {
+        float: left;
+    }
+    .popularity img, .votes img {
+        display: flex;
+        align-self: center;
+    }
+
+    .popularity, .votes {
+        width: 308px;
+        padding-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        align-content: center;
+        font-size: 20px;
+    }
+
+    .IndividualReview h3 {
         font-size: 30px;
+    }
+
+    .genretiquette p {
+        color: #000000;
+        text-align: center;
+    }
+
+    body {
+        font-family: 'Playfair Display', serif;
+    }
+
+    .genretiquette {
+        margin: 10px;
+    }
+
+    #mainImg {
+        box-shadow: 4px 4px #e6e6e6;
+        border-radius: 5px;
+        width: 500px;
+    }
+
+    #mainImg:hover {
+        box-shadow: 15px 15px black;
+    }
+
+    .IndividualReview {
+        margin: 20px;
+        display: flex;
+        max-width: 1600px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .IndividualReview h3 {
+        text-transform: capitalize;
+    }
+    .anotherDiv {
+        gap: 30px;
+        /* background-color: cornflowerblue; */
+    }
+    #release {
+        font-size: 25px;
+        padding: 10px;
+        background-color: #35EEDDFF;
+        border-left-style: solid;
+        border-color: blue;
+        border-radius: 0 4px 4px 0;
+        width: 300px;
+    }
+
+    .IndividualReview * {
+        margin: 20px;
+        display: flex;
+    }
+
+    .main {
+        padding: 100px;
+        margin: auto;
+        background-color: #f5f5f5;
     }
 
     .content-noreviews {
         display: flex;
+        width: 90%;
         justify-content: center;
+    }
+
+    .content {
+        display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
+        justify-content: center;
+        width: 60%;
+        margin: 10px;
     }
 
     .anotherDiv {
         display: flex;
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .popularity, .votes, .description, .genres, .review, h1 {
-        width: 210px;
-        margin-right: 20px;
-        margin-left: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
     .content-img {
+        margin: 10px 20px 10px 10px;
+        padding: 50px;
+    }
+
+    img {
+        float: left;
         margin: 0;
     }
 
-    #release {
+
+    .types {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: baseline;
+    }
+
+    .genres h2 {
+        text-align: center;
+    }
+
+    h1 {
+        float: right;
+        font-size: 40px;
+    }
+
+    .review {
         display: flex;
         flex-direction: column;
-        width: 210px;
+        column-gap: 30px;
+    }
+
+    .description img {
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .comments {
-        margin: 0;
-        padding: 0;
+        margin: 40px 20px 20px;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        column-gap: 30px;
     }
 
     .comments h2 {
+        font-size: 35px;
+    }
+
+    .divReviewCreateDate {
+        width: auto;
+        background-color: #c5d6e1;
+        border-radius: 5px;
+        box-shadow: 4px 4px #888888;
+        max-width: 240px;
+        text-align: center;
+        float: right;
+    }
+
+    .divReviewCreateDate p{
+        font-size: 25px;
         text-align: center;
     }
 }
