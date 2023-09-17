@@ -1,24 +1,20 @@
 import getReviewFilm from "../Javascript/getReviewsFilmId.js";
 import getFilmDetails from "../Javascript/getFilmID.js";
 
-const queryString = window.location.search;
-console.log(queryString);
-const urlParams = new URLSearchParams(queryString);
-const id = urlParams.get('filmid')
-console.log(id);
+const currentUrlWindow = window.location.search;
+console.log(currentUrlWindow);
+const urlParams = new URLSearchParams(currentUrlWindow);
+const id = urlParams.get('filmid');
 
 let error = false;
 let loading = true;
-const url = getReviewFilm(id);
-const url2 = getFilmDetails(id);
-
-console.log("review url : ", url);
-console.log("details url : ", url2);
 await getUrlDetails(id);
 await getUrlReviewsFilm(id);
+
 function deleteMain() {
-    document.getElementsByClassName('main')[0].innerHTML="";
+    document.getElementsByClassName('main')[0].innerHTML = "";
 }
+
 function checkError() {
     if (error === true) {
         debugger;
@@ -63,9 +59,9 @@ async function getUrlDetails(id) {
             loading = false;
         }
     } catch (e) {
-        let message = "Please, recharge the page .       "+e;
+        let message = e;
         alert('Please, recharge the page');
-        myPersonalError('Error',message);
+        myPersonalError('Error', message);
         loading = false;
     }
 }
@@ -91,13 +87,13 @@ async function getUrlReviewsFilm(id) {
             let titleImg = document.createElement("div");
             let titleImgDate = document.createElement("div");
 
+
             let author = document.createElement("h3");
             let textAuthor = document.createTextNode(reviews[i].author);
             author.appendChild(textAuthor);
             let svg = document.createElement("img");
             svg.src = "SVG/feedback_message_chat_review_icon_220539.svg";
             svg.alt = "svg_chat";
-            svg.className = "svg_feedback";
             svg.width = 40;
             svg.height = 40;
             titleImg.appendChild(svg);
@@ -105,7 +101,7 @@ async function getUrlReviewsFilm(id) {
             titleImgDate.appendChild(titleImg);
             titleImg.className = "titleImg";
             let divReviewCreateDate = document.createElement("div");
-            titleImgDate.className="titleImgDate";
+            titleImgDate.className = "titleImgDate";
             console.log(reviews[i].created_at);
             let created_date = document.createElement("p");
             let correctDate = new Date(reviews[i].created_at);
@@ -131,12 +127,8 @@ async function getUrlReviewsFilm(id) {
             divReview.appendChild(divIndividualReview);
         }
 
-        /* if (this.films.length === 0 && !this.error) {
-                    myPersonalError('Without coincidences', 'There is not available data');
-                    loading = false;
-         }*/
     } catch (e) {
-        myPersonalError('Error', 'Please, recharge the page  : '+e);
+        myPersonalError('Error', e);
         console.error(e);
         loading = false;
     }
@@ -158,29 +150,20 @@ function myPersonalError(titleError, message) {
         'justify-content: center;');
 
     let ertitle = document.createElement('h2');
-    ertitle.setAttribute('style','color: #2e2aad;\n' +
+    ertitle.setAttribute('style', 'color: #2e2aad;\n' +
         'font-size: 40px;margin: 0;');
 
     let erp = document.createElement('p');
-    erp.setAttribute('style','color: #0e4935;font-size: 25px;');
-        let textp = document.createTextNode(message);
+    erp.setAttribute('style', 'color: #0e4935;font-size: 25px;');
+    let textp = document.createTextNode(message);
     let texttitle = document.createTextNode(titleError);
     erp.appendChild(textp);
     ertitle.appendChild(texttitle);
     div.appendChild(ertitle);
     div.appendChild(erp);
     const cuerpoDiv = document.getElementsByClassName('main')[0];
-    cuerpoDiv.setAttribute('style','display: flex;\n' +
+    cuerpoDiv.setAttribute('style', 'display: flex;\n' +
         'justify-content: center;');
-
-   /* div.addEventListener(
-        "mouseover",
-        (event) => {
-            // highlight the mouseover target
-            event.target.style.boxShadow = "15px 15px red";
-        },
-        false,
-    );*/
     cuerpoDiv.appendChild(div);
 }
 
