@@ -19,7 +19,8 @@ export default defineComponent({
   },
   methods:{
     showMore:function(){
-    this.visibility = !this.visibility
+    this.visibility = !this.visibility;
+		this.$emit('seeMore',1);
     }
   }
 })

@@ -25,34 +25,34 @@ export default defineComponent({
 	 }
   },
   methods: {
-	 paginationFather(page){
+	 paginationFather(page) {
 		this.getUrl(this.currentQuery, page);
 	 },
 	 toSon(query) {
 		this.myQuery = query;
 		this.search(this.myQuery);
 	 },
-	 search(query){
+	 search(query) {
 		this.actual_page = 1;
 		this.currentQuery = query;
 		this.getUrl(this.currentQuery, this.actual_page);
 	 },
 	 checkError() {
-		if(this.error===true){
+		if (this.error === true) {
 		  document.getElementsByClassName('containFilms')[0].removeChild(document.getElementsByClassName('error')[0]);
 		  this.error = false;
 		}
 	 },
-	 async getUrl(query, page){
+	 async getUrl(query, page) {
 		this.checkError();
 		this.loading = true;
-		this.films=[];
+		this.films = [];
 		const url = getUrlTheMovieDB(query, page);
-		console.log("actual url : ",url);
+		console.log("actual url : ", url);
 		try {
-		  console.log("Dentro de getURL ",query);
+		  console.log("Dentro de getURL ", query);
 		  let response = await fetch(url);
-		  if(!response.ok) {
+		  if (!response.ok) {
 			 throw new Error(`HTTP error ${response.status}`);
 		  }
 		  //throw ('There is a problem in catching the data from the api');
@@ -62,21 +62,21 @@ export default defineComponent({
 		  this.actual_page = data.page;
 		  this.total_pages = data.total_pages;
 		  this.loading = false;
-		  if(this.films.length === 0 && !this.error){
+		  if (this.films.length === 0 && !this.error) {
 			 this.myPersonalError('Without coincidences', 'There is not available data');
 			 this.loading = false;
 		  }
-		}catch (e){
+		} catch (e) {
 		  this.myPersonalError('Error', 'Please, recharge the page');
 		  this.loading = false;
 		}
 	 },
 	 
-	 myPersonalError(titleError, message){
+	 myPersonalError(titleError, message) {
 		this.error = true;
 		const div = document.createElement("div");
-		div.setAttribute('class','error');
-		div.setAttribute('style','width:100%;background-color:#ffb0b0;text-align:center;');
+		div.setAttribute('class', 'error');
+		div.setAttribute('style', 'width:100%;background-color:#ffb0b0;text-align:center;');
 		let ertitle = document.createElement('h2');
 		let erp = document.createElement('p');
 		let textp = document.createTextNode(message);
@@ -89,20 +89,21 @@ export default defineComponent({
 		cuerpoDiv.appendChild(div);
 	 }
   },
-  watch:{
-	 query(newQuery){
-		console.log("Dentro de watch mi query : "+newQuery)
+  watch: {
+	 query(newQuery) {
+		console.log("Dentro de watch mi query : " + newQuery)
 		this.search(newQuery);
 	 }
   },
   
   
-  mounted(){
-	 this.getUrl("",this.actual_page);
-	 if (this.myQuery.trim() !== ""){
+  mounted() {
+	 this.getUrl("", this.actual_page);
+	 if (this.myQuery.trim() !== "") {
 		this.actual_page = 1;
 		this.currentQuery = this.myQuery;
-		this.getUrl(this.currentQuery, this.actual_page);}
+		this.getUrl(this.currentQuery, this.actual_page);
+	 }
 	 
   }
 })
@@ -150,18 +151,15 @@ export default defineComponent({
 .containerApp {
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-flow: row wrap;
+  display: block;
 }
 
-@media screen and (max-width: 600px) {
-  .main {
-	 margin: 8px 4px 8px 4px;
-  }
-  
-  #actual_page {
-	 font-size: 20px;
-  }
+.main {
+  margin: 0;
+}
+
+#actual_page {
+  font-size: 20px;
 }
 
 .header {
@@ -179,18 +177,6 @@ export default defineComponent({
   flex-direction: row;
   gap: 5px;
   justify-content: center;
-}
-
-
-.main {
-  margin: 20px;
-  
-  background-color: rgba(153, 133, 162, 0.84);
-  order: 2;
-  flex-direction: column;
-  display: flex;
-  min-height: calc(100% - 150px);
-  width: 100%;
 }
 
 .footer {
@@ -211,4 +197,24 @@ export default defineComponent({
   display: flex;
   justify-content: center;
 }
+
+@media screen and (min-width: 1000px) {
+  .main {
+	 margin: 20px;
+	 background-color: rgba(153, 133, 162, 0.84);
+	 order: 2;
+	 flex-direction: column;
+	 display: flex;
+	 min-height: calc(100% - 150px);
+	 width: 100%;
+  }
+  
+  .containerApp {
+	 height: 100%;
+	 width: 100%;
+	 display: flex;
+	 flex-flow: row wrap;
+  }
+}
+
 </style>

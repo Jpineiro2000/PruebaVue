@@ -11,19 +11,27 @@ export default defineComponent({
   },
   methods:{
 	 openFilmPage(filmid){
-		console.log(filmid);
-		window.location.href = "/Films/index.html?filmid="+filmid;
-	 }
+		if(this.see === 0) {
+		  console.log(filmid);
+		  window.location.href = "/Films/index.html?filmid=" + filmid;
+		}
+	 },
+	 infoDisplayed(){
+		this.see=1;
+	 },
   },
   data() {
-	 return {baseUrl: "https://image.tmdb.org/t/p/w300"}
+	 return {
+		baseUrl: "https://image.tmdb.org/t/p/w300",
+	 	see:0,
+	 }
   }
 })
 </script>
 
 <template>
   <div class="container">
-	 <FilmCard @click="openFilmPage(film.id)" v-for="film in films"
+	 <FilmCard @click="openFilmPage(film.id)" @seeMore="infoDisplayed" v-for="film in films"
 				  :description="film.overview" :img="baseUrl + film.poster_path" :title="film.title">
 	 </FilmCard>
   </div>

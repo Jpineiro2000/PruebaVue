@@ -6,19 +6,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-    <script type="module" src="Javascript/index.js"></script>
     <link rel="stylesheet" type="text/css" href="CSS/index.css">
+    <script type="module" src="Javascript/index.js"></script>
 </head>
 <body>
-<div class="main">
+<main class="main">
+    <h2 class="title_dt1">Film Details</h2>
+    <img class="spinner1" alt="spinning" height="200" src="../../src/Images/Spinner.gif" width="200">
     <div class="content-noreviews">
-
         <div class="content-img">
-            <img id="mainImg" src="../../src/Images/img_avatar2.png" height="648dpi" width="auto" alt="">
+            <img id="mainImg" src="../../src/Images/img_avatar2.png" height="648dpi" width="320px" alt="Film cover">
         </div>
 
         <div class="content">
-            <h1>Film title</h1>
+            <h1></h1>
 
             <div class="description">
                 <div class="title_description">
@@ -27,7 +28,7 @@
                 </div>
                 <p></p>
             </div>
-            <p id="release"><b>Release date : </b></p>
+            <div id="pRelease"><b>Release date : <span id="release"></span></b></div>
 
             <div class="divPopularityVotes">
                 <div class="popularity">
@@ -35,7 +36,6 @@
                     <p></p>
                     <img src="SVG/thumbs_up_star_like_favourite_icon_142415.svg" alt="description_img" width="70"
                          height="70">
-
                 </div>
                 <div class="votes">
                     <h2>Vote average</h2>
@@ -49,11 +49,18 @@
             </div>
         </div>
     </div>
+    <h2 class="title_dt2">Reviews</h2>
+    <img class="spinner2" alt="spinning" height="200" src="../../src/Images/Spinner.gif" width="200">
+
     <div class="comments">
-        <h2>Reviews</h2>
+
         <div class="review"></div>
+        
     </div>
-</div>
+    <div class="errorPersonal" style="display: none;">
+    </div>
+    
+</main>
 
 </body>
 </html>

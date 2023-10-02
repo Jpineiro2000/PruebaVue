@@ -1,9 +1,58 @@
-body {
-    font-family: 'Playfair Display', serif;
+/*
+Ocupar pantalla completa en error y spinner
+    Arreglar css Móvil a ordenador(@media 1000px) de detalle Película.
+    Cambiar div class main por tag main ✅
+    Cambiar el css de la página principal como el de la página ✅
+    Poner svg de cargando y centrarlo
+    Hacer paginado la parte de los comentarios , No es posible , la api no tiene paginación de comentarios , no hay suficientes disponibles
+    Cambiar getClassByName[0] por querySelector ✅
+    Mejor hacer removeChild y evitar el uso de innerHTML  ✅
+    En el pRelease_date cambiar el innerHTML por un appendChild y con el tag span  ✅
+    Cambiar lo que es el tag de los autores por un p bold y con font-size distintos ✅
+    Asegurarse de quitar el scroll horizontal de los distintos tipos de pantalla diferentes en ambas páginas(detalle película  y página principal ✅)
+    Hacer el error hide y cuando muestro el error hacer hide en los demás elementos. ✅
+    Pasar de píxel a rem --> 16px = 1 rem; ✅
+    Corregir el Onclick see more de la página principal
+*/
+html{
+    width: 100%;
+    height: 100%;
 }
 
+.spinner1,.spinner2 {
+    align-self: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    margin: 0;
+}
+
+.errorPersonal{
+    width: 25rem;
+    background-color: #ffb0b0;
+    text-align: center;
+    box-shadow: 0.9375rem 0.9375rem red;
+    border-radius: 125rem 125rem 125rem 125rem;
+    height: 25rem;
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+}
 .main {
-    padding: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    padding: 1.25rem;
     margin: auto;
     background-color: #f5f5f5;
 }
@@ -13,58 +62,88 @@ body {
 }
 
 .genres {
-    margin-top: 20px;
+    margin-top: 1.25rem;
 }
 
 .genres h2 {
     text-align: center;
+    font-size: 3rem ;
+
 }
 
 .title_description {
     display: flex;
     flex-direction: row;
 }
+.title_description h2{
+    font-size: 3rem ;
+}
 
 .description {
     background-color: wheat;
-    padding: 10px;
+    padding: 0.625rem;
 }
 
 #mainImg {
-    width: 300px;
+    width: 100%;
+    //min-width: 320px;
     height: auto;
+
+}
+.content-img{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: fit-content;
+    height: auto;
+}
+.authors{
+    font-weight: bold;
+    font-size: 3rem;
 }
 
 .title_description img {
-    margin: 20px 10px 10px;
+    margin: auto 1rem;
+    width: 5rem;
+    height: 8rem;
 }
 
-.description:hover, .genres:hover, .popularity:hover, .votes:hover, .IndividualReview:hover, #release:hover {
-    box-shadow: 10px 10px black;
+.description:hover, .genres:hover, .popularity:hover, .votes:hover, .IndividualReview:hover, #pRelease:hover {
+    box-shadow: 0.625rem 0.625rem black;
     background-color: #f1cb76;
 }
 
-.description, .genres, .popularity, .votes, .IndividualReview, #release {
+.description, .genres, .popularity, .votes, .IndividualReview, #pRelease {
     background-color: wheat;
-    box-shadow: 4px 4px #e6e6e6;
-    border-radius: 5px;
-    padding: 5px 20px;
-    font-size: 20px;
+    box-shadow: 0.25rem 0.25rem #e6e6e6;
+    border-radius: 0.3125rem;
+    padding: 0.3125rem 3rem 1rem 3rem;
+    font-size: 1.25rem;
 }
 
-#release {
-    padding: 10px;
+.genres,.popularity,.votes,#pRelease, .divReviewCreateDate{
+    font-size: 2.5rem;
+}
+
+#release p{
+    margin: 0;
+    display: inline;
+}
+#pRelease {
+    margin: 1rem 1rem 1rem 0;
+    display: inline-block;
     background-color: #35EEDDFF;
     border-left-style: solid;
     border-color: blue;
-    border-radius: 0 4px 4px 0;
-    width: 280px;
+    border-radius: 0 0.25rem 0.25rem 0;
+    width: max-content;
 }
 
 .divPopularityVotes {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.25rem;
 }
 
 .votes, .popularity {
@@ -72,34 +151,48 @@ body {
     flex-direction: column;
     text-align: center;
     justify-content: center;
+    flex-grow: 1;
 }
+
+.votes h2, .popularity h2 {
+    font-size: 3rem;
+}
+
 
 .votes img, .popularity img {
     margin: auto;
-    padding-bottom: 15px;
+    padding-bottom: 0.9375rem;
 }
 
 .types {
-    margin-top: 20px;
+    margin-top: 1.25rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     text-align: center;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+    gap: 2rem;
 }
 
-.comments h2 {
+.main h2 {
     text-align: center;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    font-size: 30px;
+    padding-bottom: 1.25rem;
+    padding-top: 1.25rem;
+    font-size: 3rem;
 }
 
 .IndividualReview {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 50px;
+    margin-bottom: 3.125rem;
+}
+.titleImgDate{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .titleImg {
@@ -109,218 +202,76 @@ body {
 }
 
 .titleImg img {
-    padding: 15px;
-    margin-bottom: auto;
+    padding: 0.9375rem;
+    width: 5rem;
+    height: 5rem;
+    margin: auto 0;
 }
 
 .divReviewCreateDate {
-    width: 250px;
+    width: 18rem;
     background-color: #c5d6e1;
-    border-radius: 5px;
-    box-shadow: 4px 4px #888888;
+    border-radius: 0.3125rem;
+    box-shadow: 0.25rem 0.25rem #888888;
+    font-size: 2rem;
     text-align: center;
-    height: 50px;
+    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.content-noreviews{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
 
-@media screen and (min-width: 1000px) {
-    .description:hover, .genres:hover, .popularity:hover, .votes:hover, .IndividualReview:hover, #release:hover {
-        box-shadow: 15px 15px black;
-        background-color: #f1cb76;
+@media screen  and (min-width: 1000px){
+    div {
+        background-color: rgba(229, 229, 229, 0.8);
+    }
+    .content-img{
+            width: 500px;
+            height: fit-content;
+            margin-top: 5rem;
+    }
+    .content{
+        float: right;
+        width: 60%;
     }
 
-    .titleImgDate {
-        width: 100%;
-        margin: auto;
-        display: flex;
-        align-items: baseline;
+   .content-noreviews{
+       display: none;
+       flex-direction: row;
+       justify-content:center ;
+       flex-wrap: wrap;
     }
+    #mainImg{
+        max-height: 50rem;
+        margin: 2rem;
+        width: 32rem;
 
-    .titleImg {
-        margin-left: 30px;
+    }
+    #pRelease{
+        margin: 1rem 1rem 1rem 0;
+    }
+    #release p{
+        margin: 0;
+        display: inline;
+    }
+    .titleImg{
         flex-grow: 1;
     }
-
-    .titleImg img {
-        padding: 0;
-        margin-top: auto;
+    .titleImgDate{
+        flex-direction: row;
+        width: 100%;
     }
-
-    #release:hover {
-        background-color: #11bda9;
-    }
-
-    .genres p, .popularity p, .votes p {
-        font-size: 25px;
-    }
-
-    .description, .genres, .popularity, .votes, .IndividualReview, #release {
-        background-color: wheat;
-        box-shadow: 4px 4px #e6e6e6;
-        border-radius: 5px;
-        padding: 5px 20px;
-        margin: 20px;
-        font-size: 20px;
-    }
-
-    .popularity img, .votes img {
+    .content{
         display: flex;
-        align-self: center;
-    }
-
-    .popularity, .votes {
-        width: 300px;
-        padding-bottom: 40px;
-    }
-
-    .IndividualReview h3 {
-        font-size: 30px;
-    }
-
-    .genretiquette p {
-        color: #000000;
-        text-align: center;
-    }
-
-    body {
-        font-family: 'Playfair Display', serif;
-    }
-
-    .genretiquette {
-        margin: 10px;
-    }
-
-    #mainImg {
-        box-shadow: 4px 4px #e6e6e6;
-        border-radius: 5px;
-        width: 500px;
-    }
-
-    #mainImg:hover {
-        box-shadow: 15px 15px black;
-    }
-
-    .IndividualReview {
-        margin: 20px;
-        display: flex;
-        max-width: 1600px;
         flex-direction: column;
         flex-wrap: wrap;
-    }
-
-    .IndividualReview h3 {
-        text-transform: capitalize;
-    }
-
-    .divPopularityVotes {
-        gap: 30px;
-    }
-
-    #release {
-        font-size: 25px;
-        padding: 10px;
-        background-color: #35EEDDFF;
-        border-left-style: solid;
-        border-color: blue;
-        border-radius: 0 4px 4px 0;
-        width: 300px;
-    }
-
-    .IndividualReview * {
-        margin: 15px;
-        display: flex;
-    }
-
-    .main {
-        padding: 100px;
-        margin: auto;
-        background-color: #f5f5f5;
-    }
-
-    .content-noreviews {
-        display: flex;
-        width: 90%;
-        justify-content: center;
-    }
-
-    .content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         width: 60%;
-        margin: 10px;
     }
 
-    .divPopularityVotes {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .content-img {
-        margin: 10px 20px 10px 10px;
-        padding: 50px;
-    }
-
-    img {
-        margin: 0;
-    }
-
-    .types {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: baseline;
-    }
-
-    .genres h2 {
-        text-align: center;
-    }
-
-
-    h1 {
-        font-size: 40px;
-    }
-
-    .review {
-        display: flex;
-        flex-direction: column;
-        column-gap: 30px;
-    }
-
-    .description img {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
-    .comments {
-        margin: 40px 20px 20px;
-        width: 90%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        column-gap: 30px;
-    }
-
-    .comments h2 {
-        font-size: 35px;
-        text-align: left;
-    }
-
-    .divReviewCreateDate {
-        width: auto;
-        background-color: #c5d6e1;
-        border-radius: 5px;
-        box-shadow: 4px 4px #888888;
-        max-width: 240px;
-        text-align: center;
-        margin-right: 80px;
-    }
-
-    .divReviewCreateDate p {
-        font-size: 25px;
-        text-align: center;
-    }
 }
