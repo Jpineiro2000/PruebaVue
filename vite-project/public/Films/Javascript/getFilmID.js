@@ -3,12 +3,10 @@
 
 
 
-const baseAPIUrl ="https://api.themoviedb.org/3/movie/";
-const api_key = 	"66ae687f31e3066ab23a1b7128278d17";
+import {url, api_key} from "./CommonData.js";
 //reviews?api_key=66ae687f31e3066ab23a1b7128278d17&language=en-US&page=1
 
 function getFilmDetails(filmId){
-    const url = new URL(baseAPIUrl);
     const urlId = new URL(filmId,url);
     urlId.searchParams.set('api_key',api_key);
     return urlId.toString();
