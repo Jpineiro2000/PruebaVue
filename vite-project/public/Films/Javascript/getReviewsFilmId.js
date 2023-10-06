@@ -7,8 +7,7 @@ const api_key = 	"66ae687f31e3066ab23a1b7128278d17";
 //reviews?api_key=66ae687f31e3066ab23a1b7128278d17&language=en-US&page=1
 
 function getReviewFilm(filmId){
-    let url = new URL(baseAPIUrl);
-    let urlId = new URL(filmId+"/reviews",url);
+    const urlId = new URL(filmId+"/reviews",url);
     urlId.searchParams.set('api_key',api_key);
     urlId.searchParams.set("language", 'en-US');
     //urlId.searchParams.set("page", 1);

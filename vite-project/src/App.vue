@@ -23,6 +23,7 @@ export default defineComponent({
 		//Las dimensiones disponibles de los píxeles son de 300 a 500 píxeles
 		error: false,
 	 }
+	 
   },
   methods: {
 	 paginationFather(page) {

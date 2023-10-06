@@ -6,40 +6,35 @@ console.log(currentUrlWindow);
 const urlParams = new URLSearchParams(currentUrlWindow);
 const id = urlParams.get('filmid');
 
-let error = false;
+var error = false;
 
 await getUrlDetails(id);
 await getUrlReviewsFilm(id);
 function hideDetails(){
-    document.querySelector('.content-noreviews').setAttribute('style', 'display: none;');
+    document.querySelector('.content_noreviews').setAttribute('style', 'display: none;');
 
 }
 function hideComments(){
     document.querySelector('.comments').setAttribute('style', 'display: none;');
-
 }
 
 function showSpinner(number) {
-    debugger;
-
-    /*document.querySelector('.main').setAttribute('style', 'width: 100%;height: 100%;');
-    document.body.setAttribute('style', 'width: 100%;height: 100%;  overflow: hidden;');
-    document.getElementsByTagName('html')[0].setAttribute('style', 'width: 100%;height: 100%;');*/
-    if(number === 1) {
+    if(number === '.details') {
         hideDetails();
-    }else if(number === 2){
+    }else if(number === '.section_reviews'){
         hideComments();
     }
-    document.querySelector('.spinner' + number).setAttribute('style', 'display: flex;');
+    console.log(document.querySelector(number+'> .spinner').src);
+    document.querySelector(number+'> .spinner').setAttribute('style', 'display: flex;');
 
 }
 function hideSpinner(number){
-    if(number === 1) {
+    if(number === '.details') {
        showDetails();
-    }else if(number === 2){
+    }else if(number === '.section_reviews'){
         showComments()
     }
-    document.querySelector('.spinner' + number).setAttribute('style', 'display: none;');
+    document.querySelector(number+'> .spinner').setAttribute('style', 'display: none;');
 
     document.querySelector('.main').setAttribute('style', 'width: 90%;height: auto;');
     document.body.setAttribute('style', 'width:auto;height: auto;  overflow: auto;');
@@ -49,14 +44,14 @@ function hideSpinner(number){
 
 
 function showDetails() {
-    document.querySelector('.content-noreviews').setAttribute('style', '  display: flex;');
+    document.querySelector('.content_noreviews').setAttribute('style', '  display: flex;');
 }
 function showComments(){
     document.querySelector('.comments').setAttribute('style', '  display: flex;');
 }
 
 async function getUrlDetails(id) {
-    showSpinner(1);
+    showSpinner('.details');
     let baseUrl = "https://image.tmdb.org/t/p/w300";
     const url = getFilmDetails(id);
     try {
@@ -68,12 +63,13 @@ async function getUrlDetails(id) {
         //throw ('There is a problem in catching the data from the api');
         let data = await response.json();
 
-        document.getElementById('mainImg').src = baseUrl + data.poster_path;
-
-
+        document.querySelector('.cover_img').src = baseUrl + data.poster_path;
+       // alert(document.getElementsByTagName("title")[0].);
         let variableTitle = document.createElement('p');
         let textoTitle = document.createTextNode(data.title);
         variableTitle.appendChild(textoTitle);
+
+        document.title = data.title;
         document.getElementsByTagName("h1")[0].appendChild(variableTitle);
 
 
@@ -86,7 +82,7 @@ async function getUrlDetails(id) {
         let variableRelease_date = document.createElement('p');
         let textoRelease_date = document.createTextNode(data.release_date);
         variableRelease_date.appendChild(textoRelease_date);
-        document.getElementById('release').appendChild(variableRelease_date);
+        document.querySelector('.release').appendChild(variableRelease_date);
 
 
         let variablePopularity = document.createElement('p');
@@ -110,7 +106,7 @@ async function getUrlDetails(id) {
             genretiquette.appendChild(genre);
             document.querySelector(".types").appendChild(genretiquette);
         }
-        hideSpinner(1);
+        hideSpinner('.details');
         if (data.title === "" && !error) {
             myPersonalError('Without coincidences', 'There is not available data');
         }
@@ -125,7 +121,7 @@ async function getUrlReviewsFilm(id) {
     if (error === true) {
         return 0;
     }
-    showSpinner(2);
+    showSpinner('.section_reviews');
 
     let reviews = [];
     const url = getReviewFilm(id);
@@ -156,16 +152,16 @@ async function getUrlReviewsFilm(id) {
             titleImg.appendChild(svg);
             titleImg.appendChild(author);
             titleImgDate.appendChild(titleImg);
-            titleImg.className = "titleImg";
+            titleImg.className = "title_img";
             let divReviewCreateDate = document.createElement("div");
-            titleImgDate.className = "titleImgDate";
+            titleImgDate.className = "title_img_date";
             console.log(reviews[i].created_at);
             let created_date = document.createElement("p");
             let correctDate = new Date(reviews[i].created_at);
 
             correctDate = (correctDate.getFullYear() + "-" + (correctDate.getMonth() + 1) + "-" + correctDate.getDate() + "  " + correctDate.getUTCHours() + ":" + correctDate.getMinutes() + ":" + correctDate.getSeconds());
             let dateText = document.createTextNode(correctDate);
-            divReviewCreateDate.className = "divReviewCreateDate";
+            divReviewCreateDate.className = "div_review_create_date";
             created_date.appendChild(dateText);
             divReviewCreateDate.appendChild(created_date);
             titleImgDate.appendChild(divReviewCreateDate);
@@ -173,7 +169,7 @@ async function getUrlReviewsFilm(id) {
 
 
             divReview.appendChild(divIndividualReview);
-            divIndividualReview.setAttribute("class", "IndividualReview");
+            divIndividualReview.setAttribute("class", "individual_review");
 
 
             let review = document.createElement("p");
@@ -183,7 +179,7 @@ async function getUrlReviewsFilm(id) {
 
             divReview.appendChild(divIndividualReview);
         }
-    hideSpinner(2);
+    hideSpinner('.section_reviews');
     } catch (e) {
         myPersonalError('Error', e);
         console.error(e);
@@ -194,7 +190,7 @@ function myPersonalError(titleError, message) {
     error = true;
     hideDetails();
     hideComments();
-    const divError = document.querySelector(".errorPersonal");
+    const divError = document.querySelector(".error_personal");
     let ertitle = document.createElement('h2');
     ertitle.setAttribute('style', 'color: #2e2aad;\n' + 'font-size: 40px;margin: 0;');
     let erp = document.createElement('p');
@@ -208,10 +204,10 @@ function myPersonalError(titleError, message) {
     let cuerpoDiv = document.getElementsByClassName('main')[0];
     cuerpoDiv.setAttribute('style', 'display: flex;\n' + 'justify-content: center;');
     cuerpoDiv.appendChild(divError);
-    document.querySelector('.spinner1').setAttribute('style', 'display: none;');
-    document.querySelector('.spinner2').setAttribute('style', 'display: none;');
-    document.querySelector('.title_dt1').setAttribute('style', 'display: none;');
-    document.querySelector('.title_dt2').setAttribute('style', 'display: none;');
+    document.querySelector('.details > .spinner').setAttribute('style', 'display: none;');
+    document.querySelector('.section_reviews > .spinner').setAttribute('style', 'display: none;');
+    document.querySelector('.title_details ').setAttribute('style', 'display: none;');
+    document.querySelector('.title_reviews').setAttribute('style', 'display: none;');
 
     document.querySelector('.main').setAttribute('style', 'width: 100%;height: 100%;');
     document.body.setAttribute('style', 'width: 100%;height: 100%;  overflow: hidden;');
