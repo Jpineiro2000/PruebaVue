@@ -1,39 +1,40 @@
 <script>
-
-import {defineComponent} from 'vue'
+import { defineComponent } from "vue";
 import FilmCard from "./FilmCard.vue";
 
 export default defineComponent({
   name: "FilmDisplay",
-  components: {FilmCard},
+  components: { FilmCard },
   props: {
-	 films: Array,
+    films: Array,
   },
-  methods:{
-	 openFilmPage(filmid){
-		if(this.see === 0) {
-		  console.log(filmid);
-		  window.location.href = "/Films/index.html?filmid=" + filmid;
-		}
-	 },
-	 infoDisplayed(){
-		this.see=1;
-	 },
+
+  methods: {
+    openFilmPage(filmid) {
+      console.log(filmid);
+      window.location.href = "/Films/index.html?filmid=" + filmid;
+    },
   },
   data() {
-	 return {
-		baseUrl: "https://image.tmdb.org/t/p/w300",
-	 	see:0,
-	 }
-  }
-})
+    return {
+      baseUrl: "https://image.tmdb.org/t/p/w300",
+      see: 0,
+    };
+  },
+});
 </script>
 
 <template>
   <div class="container">
-	 <FilmCard @click="openFilmPage(film.id)" @seeMore="infoDisplayed" v-for="film in films"
-				  :description="film.overview" :img="baseUrl + film.poster_path" :title="film.title">
-	 </FilmCard>
+    <FilmCard
+      class="film_cards"
+      @click="openFilmPage(film.id)"
+      v-for="film in films"
+      :description="film.overview"
+      :img="baseUrl + film.poster_path"
+      :title="film.title"
+    >
+    </FilmCard>
   </div>
 </template>
 
@@ -50,10 +51,8 @@ export default defineComponent({
 }
 
 @media screen and (max-width: 600px) {
-  
   .container {
-	 background-color: lightblue;
+    background-color: lightblue;
   }
 }
-
 </style>
