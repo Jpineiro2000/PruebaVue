@@ -13,6 +13,7 @@ export default defineComponent({
     openFilmPage(filmid) {
       console.log(filmid);
       window.location.href = "/Films/index.html?filmid=" + filmid;
+      //window.location.href = "?page=" + filmid;
     },
   },
   data() {
@@ -20,6 +21,15 @@ export default defineComponent({
       baseUrl: "https://image.tmdb.org/t/p/w300",
       see: 0,
     };
+  },
+  mounted() {
+    /*	 const beforeUnloadHandler = (event) => {
+		console.log(window.location)
+		event.preventDefault()
+		// Equivalent to the following legacy mechanisms
+		//   event.returnValue = "string";
+		//   return "string"; (only works with onbeforeunload)
+	 };*/
   },
 });
 </script>

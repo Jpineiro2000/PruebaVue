@@ -92,17 +92,7 @@ async function getUrlDetails(id) {
     variableRelease_date.appendChild(textoRelease_date);
     document.querySelector(".release").appendChild(variableRelease_date);
 
-    /* const variablePopularity = document.createElement("p");
-    const textoPopularity = document.createTextNode(data.popularity);
-    variablePopularity.appendChild(textoPopularity);
-    document.querySelector(".popularity").appendChild(variablePopularity);
-*/
     document.querySelector(".popularity p").textContent = data.popularity;
-
-    /* const variableVotes = document.createElement("p");
-    const textoVotes = document.createTextNode(data.vote_average);
-    variableVotes.appendChild(textoVotes);
-    document.querySelector(".votes").appendChild(variableVotes);*/
 
     document.querySelector(".votes p").textContent = data.vote_average;
     const genres = data.genres;

@@ -6,9 +6,11 @@ import Header from "./components/Header.vue";
 import FilmDisplay from "./components/FilmDisplay.vue";
 import ButtonPagination from "./components/ButtonPagination.vue";
 import getUrlTheMovieDB from "./getUrlTheMovieDB.js";
+import Error from "./components/Error.vue";
+import { api_key } from "../public/Films/Javascript/CommonData.js";
 
 export default defineComponent({
-  components: { ButtonPagination, FilmDisplay, Footer, Header },
+  components: { Error, ButtonPagination, FilmDisplay, Footer, Header },
   data() {
     return {
       myQuery: "",
@@ -23,6 +25,8 @@ export default defineComponent({
       //Al poner las imágenes en 300 en vez de 400. Hay algunas que no admiten este formato y la img se queda en null
       //Las dimensiones disponibles de los píxeles son de 300 a 500 píxeles
       error: false,
+      string_error: "",
+      page_charged: false,
     };
   },
   methods: {
@@ -44,6 +48,12 @@ export default defineComponent({
           .getElementsByClassName("containFilms")[0]
           .removeChild(document.getElementsByClassName("error")[0]);
         this.error = false;
+      }
+    },
+    changeUrlPage(currentpage) {
+      if (this.page_charged === false) {
+        window.location.href = "/page=" + currentpage;
+        this.page_charged = true;
       }
     },
     async getUrl(query, page) {
@@ -80,22 +90,7 @@ export default defineComponent({
 
     myPersonalError(titleError, message) {
       this.error = true;
-      const div = document.createElement("div");
-      div.setAttribute("class", "error");
-      div.setAttribute(
-        "style",
-        "width:100%;background-color:#ffb0b0;text-align:center;",
-      );
-      let ertitle = document.createElement("h2");
-      let erp = document.createElement("p");
-      let textp = document.createTextNode(message);
-      let texttitle = document.createTextNode(titleError);
-      erp.appendChild(textp);
-      ertitle.appendChild(texttitle);
-      div.appendChild(ertitle);
-      div.appendChild(erp);
-      const cuerpoDiv = document.getElementsByClassName("containFilms")[0];
-      cuerpoDiv.appendChild(div);
+      this.string_error = message;
     },
   },
   watch: {
@@ -115,7 +110,7 @@ export default defineComponent({
   },
 });
 </script>
-z
+✅
 
 <template>
   <!--<div>
@@ -144,8 +139,9 @@ z
         width="200"
       />
       <div class="containFilms">
-        <FilmDisplay :films="films" v-show="!error || !loading"></FilmDisplay>
+        <FilmDisplay :films="films" v-show="!loading"></FilmDisplay>
       </div>
+      <Error v-show="error" :string_error="this.string_error"></Error>
       <button-pagination
         class="btn-group"
         v-show="!error"
@@ -180,7 +176,7 @@ z
   background-color: #747bff;
   order: 1;
   height: 50px;
-  top:0;
+  top: 0;
   position: fixed;
   width: 100%;
 }
@@ -216,18 +212,17 @@ z
 
 @media screen and (min-width: 1000px) {
   .main {
-	 background-color: rgba(153, 133, 162, 0.84);
+    background-color: rgba(153, 133, 162, 0.84);
     order: 2;
     flex-direction: column;
     display: flex;
     min-height: calc(100% - 150px);
     width: 100%;
-	 margin: 20px 20px 20px;
-	 
+    margin: 70px 20px 20px;
   }
-  
+
   #actual_page {
-	 font-size: 30px;
+    font-size: 30px;
   }
 
   .containerApp {
