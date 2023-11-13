@@ -1,4 +1,3 @@
-//exportar función a componenteqqqqq
 //Esto es una función pura, recibe dos parámetros, no modifica ninguna propiedad y devuelve un resultado
 
 import { url, api_key } from "./CommonData.js";

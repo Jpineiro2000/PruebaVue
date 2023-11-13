@@ -7,7 +7,7 @@ import FilmDisplay from "./components/FilmDisplay.vue";
 import ButtonPagination from "./components/ButtonPagination.vue";
 import getUrlTheMovieDB from "./getUrlTheMovieDB.js";
 import Error from "./components/Error.vue";
-import { api_key } from "../public/Films/Javascript/CommonData.js";
+import changePageParams from "./changePageParams.js";
 
 export default defineComponent({
   components: { Error, ButtonPagination, FilmDisplay, Footer, Header },
@@ -16,8 +16,6 @@ export default defineComponent({
       myQuery: "",
       currentQuery: "",
       loading: false,
-      mainURL:
-        "https://api.themoviedb.org/3/discover/movie?api_key=66ae687f31e3066ab23a1b7128278d17",
       total_pages: 0,
       //Las páginas están a 500 a pesar de que tiene muchas páginas más debido a que la this.mainURL de la API no permite acceder a más.
       actual_page: 1,
@@ -31,6 +29,7 @@ export default defineComponent({
   },
   methods: {
     paginationFather(page) {
+      window.location.href = "#/?page=" + page;
       this.getUrl(this.currentQuery, page);
     },
     toSon(query) {
@@ -50,20 +49,17 @@ export default defineComponent({
         this.error = false;
       }
     },
-    changeUrlPage(currentpage) {
-      if (this.page_charged === false) {
-        window.location.href = "/page=" + currentpage;
-        this.page_charged = true;
-      }
-    },
+
     async getUrl(query, page) {
+      let new_page = changePageParams();
+      console.log("NEW Page", new_page);
       this.checkError();
       this.loading = true;
       this.films = [];
-      const url = getUrlTheMovieDB(query, page);
+      const url = getUrlTheMovieDB(query, new_page);
       console.log("actual url : ", url);
       try {
-        console.log("Dentro de getURL ", query);
+        console.log("Dentro de getURL, query :", query);
         let response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error ${response.status}`);
@@ -72,7 +68,7 @@ export default defineComponent({
         let data = await response.json();
         console.log(data);
         this.films = data.results;
-        this.actual_page = data.page;
+        this.actual_page = new_page;
         this.total_pages = data.total_pages;
         this.loading = false;
         if (this.films.length === 0 && !this.error) {
@@ -83,6 +79,7 @@ export default defineComponent({
           this.loading = false;
         }
       } catch (e) {
+        console.error(e);
         this.myPersonalError("Error", "Please, recharge the page");
         this.loading = false;
       }
@@ -101,27 +98,34 @@ export default defineComponent({
   },
 
   mounted() {
-    this.getUrl("", this.actual_page);
-    if (this.myQuery.trim() !== "") {
-      this.actual_page = 1;
-      this.currentQuery = this.myQuery;
-      this.getUrl(this.currentQuery, this.actual_page);
+    try {
+      let current_page = changePageParams();
+      console.log("current_page ChangeParams:", current_page);
+      this.getUrl("", this.actual_page);
+
+      if (this.myQuery.trim() !== "") {
+        this.actual_page = 1;
+        this.currentQuery = this.myQuery;
+        this.getUrl(this.currentQuery, this.actual_page);
+      }
+    } catch (e) {
+      console.error(e);
+      this.myPersonalError("Error", "Page not valid");
     }
   },
 });
 </script>
-✅
 
 <template>
   <!--<div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />-->
+        <a href="https://vitejs.dev" target="_blank">
+          <img src="/vite.svg" class="logo" alt="Vite logo" />
+        </a>
+        <a href="https://vuejs.org/" target="_blank">
+          <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+        </a>
+      </div>
+      <HelloWorld msg="Vite + Vue" />-->
   <div class="containerApp">
     <div class="header">
       <Header @onsubmit="toSon"></Header>
