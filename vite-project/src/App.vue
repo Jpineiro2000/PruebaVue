@@ -182,6 +182,7 @@ export default defineComponent({
   height: 50px;
   top: 0;
   position: fixed;
+  z-index: 1;
   width: 100%;
 }
 
